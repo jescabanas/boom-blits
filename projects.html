@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20261005-black-document-actions">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Projects - Barangay Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/projects.css?v=20261022-barangay-table-restored"
+    >
+
+</head>
+
+<body>
+
+<div class="layout">
+
+
+    <!-- ===================================== -->
+    <!-- SIDEBAR -->
+    <!-- ===================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+
+            <!-- ================================= -->
+            <!-- LOGO -->
+            <!-- ================================= -->
+
+            <div class="logo">
+
+                <div class="logo-mark">
+                    BT
+                </div>
+
+                <div>
+
+                    <h2>
+                        Barangay
+                    </h2>
+
+                    <span>
+                        TRACKER
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- NAVIGATION -->
+            <!-- ================================= -->
+
+            <nav class="navigation">
+
+
+                <div class="nav-label">
+                    MAIN MENU
+                </div>
+
+
+                <!-- DASHBOARD -->
+
+                <button
+                    class="nav-item"
+                    id="dashboardBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▦
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </button>
+
+
+                <!-- PROJECTS -->
+
+                <button
+                    class="nav-item active"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Projects
+                    </span>
+
+                </button>
+
+
+                <!-- ADD PROJECT -->
+
+                <button
+                    class="nav-item"
+                    id="addProjectNav"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ＋
+                    </span>
+
+                    <span>
+                        Add Project
+                    </span>
+
+                </button>
+
+
+                <!-- CITIZEN FEEDBACK -->
+
+                <button
+                    class="nav-item"
+                    id="feedbackBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Citizen Feedback
+                    </span>
+
+                </button>
+
+                <a
+                    class="nav-item"
+                    href="citizen-activity.html"
+                >
+
+                    <span class="nav-icon">◷</span>
+
+                    <span>Citizen Activity</span>
+
+                </a>
+
+
+            </nav>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- SIDEBAR BOTTOM -->
+        <!-- ================================= -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- LOGOUT -->
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ===================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ===================================== -->
+
+    <main class="main-content">
+
+
+        <!-- ================================= -->
+        <!-- TOPBAR -->
+        <!-- ================================= -->
+
+        <header class="topbar">
+
+
+            <div>
+
+
+                <div class="page-label">
+                    PROJECT MANAGEMENT
+                </div>
+
+
+                <h1>
+                    Barangay Projects
+                </h1>
+
+
+                <p id="barangayName">
+                    Loading barangay...
+                </p>
+
+
+            </div>
+
+
+            <!-- ADD PROJECT BUTTON -->
+
+            <button
+                class="add-btn"
+                id="addProjectBtn"
+                type="button"
+            >
+
+                + Add Project
+
+            </button>
+
+
+        </header>
+
+
+
+        <!-- ================================= -->
+        <!-- MESSAGE -->
+        <!-- ================================= -->
+
+        <p id="message"></p>
+
+
+
+        <!-- ================================= -->
+        <!-- PROJECT PANEL -->
+        <!-- ================================= -->
+
+        <section class="panel">
+
+
+            <!-- PANEL HEADER -->
+
+            <div class="panel-header">
+
+
+                <div>
+
+
+                    <div class="panel-label">
+                        PROJECT MONITORING
+                    </div>
+
+
+                    <h2>
+                        Barangay Projects
+                    </h2>
+
+
+                    <p>
+                        Monitor your barangay projects,
+                        budget utilization and status.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+            <div class="project-filters" aria-label="Project filters">
+                <div class="filter-field"><label for="yearFilter">Year</label><select id="yearFilter"><option value="">All years</option></select></div>
+                <div class="filter-field"><label for="monthFilter">Month</label><select id="monthFilter"><option value="">All months</option></select></div>
+            </div>
+
+
+
+            <!-- ================================= -->
+            <!-- PROJECT LIST -->
+            <!-- ================================= -->
+
+            <div id="projectList">
+
+
+                <div class="empty">
+
+
+                    <h3>
+                        Loading Projects
+                    </h3>
+
+
+                    <p>
+                        Please wait while your
+                        projects are being loaded.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- FOOTER -->
+        <!-- ================================= -->
+
+        <footer class="dashboard-footer">
+
+
+            <span>
+                Barangay Tracker
+            </span>
+
+
+            <span>
+                Project Management System
+            </span>
+
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================== -->
+
+<script
+    type="module"
+src="./js/projects.js?v=20261022-barangay-table-restored"
+></script>
+
+
+</body>
+
+</html>

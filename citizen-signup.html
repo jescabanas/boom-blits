@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Citizen Sign Up - Barangay Tracker</title>
+
+    <link rel="stylesheet" href="./css/theme.css?v=20260903-dark-preload">
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: #f3f4f6;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 460px;
+            padding: 20px;
+        }
+
+        .signup-card {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 10px 30px rgba(
+                    0,
+                    0,
+                    0,
+                    0.08
+                );
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+            margin: 0;
+
+            color: #1d4ed8;
+
+            font-size: 28px;
+        }
+
+        .brand p {
+            margin-top: 8px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+
+            color: #111827;
+
+            font-size: 22px;
+        }
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.1
+                );
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #93c5fd;
+
+            cursor: not-allowed;
+        }
+
+        #message {
+            min-height: 20px;
+
+            margin-top: 18px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+        .login-link {
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            margin-bottom: 20px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background: #eff6ff;
+
+            color: #1e40af;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 500px) {
+
+            .signup-card {
+                padding: 25px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="signup-container">
+
+        <div class="signup-card">
+
+            <div class="brand">
+
+                <h1>
+                    Barangay Tracker
+                </h1>
+
+                <p>
+                    Citizen Registration
+                </p>
+
+            </div>
+
+
+            <h2>
+                Create Citizen Account
+            </h2>
+
+
+            <div class="note">
+
+                Your account must be approved by
+                your Barangay before you can log in.
+
+            </div>
+
+
+            <form id="signupForm">
+
+
+                <!-- NAME -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            placeholder="Enter first name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="lastName">
+                            Surname
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            placeholder="Enter surname"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BARANGAY -->
+
+                <div class="form-group">
+
+                    <label for="barangay">
+
+                        Select Barangay
+
+                    </label>
+
+                    <select
+                        id="barangay"
+                        required
+                    >
+
+                        <option value="">
+                            Loading barangays...
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+
+                        Confirm Password
+
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SIGN UP -->
+
+                <button
+                    type="submit"
+                    id="signupButton"
+                >
+
+                    Sign Up
+
+                </button>
+
+
+            </form>
+
+
+            <p id="message"></p>
+
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script
+        type="module"
+        src="./js/citizen-signup.js"
+    ></script>
+
+</body>
+
+</html>

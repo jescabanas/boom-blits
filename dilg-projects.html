@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20261022-hide-validation-tabs">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DILG Projects - Barangay Tracker</title>
+    <link rel="stylesheet" href="./css/dilg-dashboard.css?v=20261022-hide-validation-tabs">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="logo"><div class="logo-mark">BT</div><div><h2>Barangay</h2><span>TRACKER</span></div></div>
+                <nav class="navigation" aria-label="Main navigation">
+                    <div class="nav-label">DILG ADMIN</div>
+                    <button class="nav-item" id="dashboardBtn" type="button"><span class="nav-icon">⌂</span><span>Dashboard</span></button>
+                    <button class="nav-item" id="barangaysBtn" type="button"><span class="nav-icon">▦</span><span>Barangays</span></button>
+                    <button class="nav-item active" id="projectsBtn" type="button"><span class="nav-icon">▣</span><span>Projects</span></button>
+                    <a class="nav-item" id="projectApprovalsBtn" href="dilg-projects.html?validation=true"><span class="nav-icon">✓</span><span>Project Validation</span></a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom"><div class="sidebar-divider"></div><button class="logout-btn" id="logoutBtn" type="button"><span class="nav-icon">↪</span><span>Logout</span></button></div>
+        </aside>
+
+        <main class="main-content dilg-projects-page">
+            <header class="topbar">
+                <div><div class="page-label" id="dilgPageLabel">DILG MANAGEMENT</div><h1 id="dilgPageTitle">Projects</h1><p id="dilgPageDescription">Review project records, supporting documents, and citizen feedback from all barangays.</p></div>
+                <div class="topbar-right"><div class="date-box"><span class="date-label">SYSTEM</span><strong>2026</strong></div><div class="notification-wrapper"><button class="notification-btn" id="notificationBtn" type="button" aria-label="Notifications">🔔<span class="notification-dot" id="notificationDot"></span></button><div class="notification-panel" id="notificationPanel" hidden><div class="notification-title">Notifications</div><div id="notificationList" class="notification-list">Loading notifications...</div></div></div></div>
+            </header>
+            <p id="message"></p>
+            <section class="panel projects-section" id="projects">
+                <div class="panel-header projects-heading"><div><span class="panel-label" id="projectPanelLabel">PROJECT RECORDS</span><h2 id="projectPanelTitle">All Barangay Projects</h2><p id="projectPanelDescription">View each project's details, supporting PDF/documents, and citizen feedback.</p></div></div>
+                <div class="dilg-content-tabs" role="tablist" aria-label="Projects content">
+                    <button class="dilg-content-tab active" id="dilgProjectsTab" type="button" role="tab" aria-selected="true" aria-controls="dilgProjectsPanel">
+                        <span>Projects</span><span class="tab-count" id="dilgProjectsCount">0</span>
+                    </button>
+                    <button class="dilg-content-tab" id="dilgFeedbackTab" type="button" role="tab" aria-selected="false" aria-controls="dilgFeedbackPanel">
+                        <span>Citizen Feedback</span><span class="tab-count" id="dilgFeedbackCount">0</span>
+                    </button>
+                </div>
+                <div id="dilgProjectsPanel" class="dilg-tab-panel" role="tabpanel" aria-labelledby="dilgProjectsTab">
+                <div class="project-filters" aria-label="Project filters">
+                    <div class="filter-field"><label for="barangayFilter">Barangay</label><select id="barangayFilter"><option value="">All barangays</option></select></div>
+                    <div class="filter-field"><label for="yearFilter">Year</label><select id="yearFilter"><option value="">All years</option></select></div>
+                    <div class="filter-field"><label for="monthFilter">Month</label><select id="monthFilter"><option value="">All months</option></select></div>
+                </div>
+                <div id="projectList" class="project-list"><div class="empty-projects">Loading projects...</div></div>
+                </div>
+                <div id="dilgFeedbackPanel" class="dilg-tab-panel" role="tabpanel" aria-labelledby="dilgFeedbackTab" hidden>
+                    <div class="feedback-table-intro"><div><h3>Feedback from citizens</h3><p>Review comments and attached images submitted for barangay projects.</p></div><label class="feedback-search"><span class="sr-only">Search citizen feedback</span><input id="dilgFeedbackSearch" type="search" placeholder="Search barangay, project, or citizen"></label></div>
+                    <div id="dilgFeedbackList" class="dilg-feedback-table-wrap"><div class="empty-projects">Loading feedback...</div></div>
+                </div>
+            </section>
+            <footer class="dashboard-footer"><span>Barangay Tracker</span><span>DILG Project Monitoring System</span><span>© 2026</span></footer>
+        </main>
+    </div>
+    <script type="module" src="./js/dilg-dashboard.js?v=20261022-hide-validation-tabs"></script>
+</body>
+</html>

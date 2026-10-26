@@ -1,0 +1,1350 @@
+/* Shared dark mode: navy surfaces, white text, and the existing sky-blue accent. */
+html.dark-mode { color-scheme: dark; }
+
+html,
+body,
+.main-content,
+.page-content,
+.content-area,
+.dashboard-content,
+.topbar,
+.page-header,
+.panel,
+.stat-card,
+.project-card,
+.project-overview,
+.form-container,
+.form-card,
+.content-card,
+.details-panel,
+.feedback-section,
+.activity-item,
+.document-row,
+.notification-panel,
+.modal-content,
+.modal-card,
+.table-container,
+.filter-panel,
+.project-filters,
+.citizen-welcome-card,
+input,
+select,
+textarea {
+    transition: background-color .38s ease, color .28s ease, border-color .38s ease, box-shadow .38s ease;
+}
+
+html.dark-mode body,
+html.dark-mode .main-content,
+html.dark-mode .page-content,
+html.dark-mode .content-area,
+html.dark-mode .dashboard-content {
+    background: #101b2b !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark-mode h1,
+html.dark-mode h2,
+html.dark-mode h3,
+html.dark-mode h4,
+html.dark-mode p,
+html.dark-mode label,
+html.dark-mode span,
+html.dark-mode strong,
+html.dark-mode small,
+html.dark-mode li,
+html.dark-mode td,
+html.dark-mode th,
+html.dark-mode .muted,
+html.dark-mode .subtitle {
+    color: #f1f5f9 !important;
+}
+
+html.dark-mode .sidebar,
+html.dark-mode .sidebar-top,
+html.dark-mode .sidebar-bottom,
+html.dark-mode .navigation,
+html.dark-mode .auth-sidebar,
+html.dark-mode .login-sidebar,
+html.dark-mode .brand-panel {
+    background: #12324a !important;
+    border-color: #28536d !important;
+}
+
+html.dark-mode .sidebar .nav-item,
+html.dark-mode .sidebar .logout-btn {
+    color: #f1f5f9 !important;
+}
+
+/* DILG/Barangay identity, header labels, date card, and sidebar glyphs. */
+html.dark-mode .sidebar .logo h2,
+html.dark-mode .sidebar .logo span,
+html.dark-mode .sidebar .nav-label,
+html.dark-mode .sidebar .nav-item span,
+html.dark-mode .sidebar .nav-icon,
+html.dark-mode .sidebar .logout-btn span,
+html.dark-mode .topbar .page-label,
+html.dark-mode .topbar .date-box .date-label,
+html.dark-mode .topbar .date-box strong {
+    color: #ffffff !important;
+}
+
+/* Supplied Barangay Tracker logo used in every dashboard sidebar. */
+.sidebar .logo-mark.brand-logo-mark {
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .72) !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    flex: 0 0 42px !important;
+    aspect-ratio: 1 / 1;
+}
+
+.sidebar .logo-mark.brand-logo-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+html.dark-mode .sidebar .logo-mark.brand-logo-mark {
+    background: #ffffff !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .sidebar .nav-item:hover,
+html.dark-mode .sidebar .nav-item.active,
+html.dark-mode .sidebar .logout-btn:hover,
+html.dark-mode .sidebar .dark-mode-toggle {
+    background: #1d4f70 !important;
+    color: #ffffff !important;
+}
+
+html.dark-mode .sidebar .dark-mode-toggle:hover {
+    background: #28678f !important;
+}
+
+html.dark-mode .topbar,
+html.dark-mode .page-header,
+html.dark-mode .panel,
+html.dark-mode .stat-card,
+html.dark-mode .project-card,
+html.dark-mode .project-overview,
+html.dark-mode .form-container,
+html.dark-mode .form-card,
+html.dark-mode .content-card,
+html.dark-mode .details-panel,
+html.dark-mode .feedback-section,
+html.dark-mode .activity-item,
+html.dark-mode .document-row,
+html.dark-mode .notification-panel,
+html.dark-mode .modal-content,
+html.dark-mode .modal-card,
+html.dark-mode .table-container,
+html.dark-mode .filter-panel,
+html.dark-mode .project-filters,
+html.dark-mode .citizen-welcome-card {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+    box-shadow: none !important;
+}
+
+/* Shared page heading: a complete rounded container instead of a cut-off line. */
+.topbar,
+.page-header {
+    margin-bottom: 26px;
+    padding: 23px 26px;
+    border: 1px solid #bae6fd;
+    border-radius: 14px;
+    background: linear-gradient(120deg, #ffffff 0%, #f0f9ff 100%);
+    box-shadow: 0 7px 18px rgba(14, 116, 144, .07);
+}
+
+.topbar .date-box {
+    border-color: #bae6fd;
+    background: #ffffff;
+}
+
+@media (max-width: 650px) {
+    .topbar,
+    .page-header {
+        margin-bottom: 20px;
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+}
+
+/* Barangay Citizen Activity: keep the record count and login information readable. */
+html.dark-mode .citizen-activity-panel .activity-count {
+    border-color: #39556c !important;
+    background: #1a2a3a !important;
+}
+
+html.dark-mode .citizen-activity-panel .activity-count strong,
+html.dark-mode .citizen-activity-panel .activity-count span,
+html.dark-mode .citizen-activity-panel .activity-person,
+html.dark-mode .citizen-activity-panel .activity-details,
+html.dark-mode .citizen-activity-panel .activity-details span {
+    color: #ffffff !important;
+}
+
+/* Remove remaining light surfaces across project, feedback, approval and detail pages. */
+html.dark-mode .main-content [class*="card"],
+html.dark-mode .main-content [class*="panel"],
+html.dark-mode .main-content [class*="box"],
+html.dark-mode .main-content [class*="container"],
+html.dark-mode .main-content [class*="item"],
+html.dark-mode .main-content [class*="row"],
+html.dark-mode .main-content [class*="section"],
+html.dark-mode .main-content .empty-state,
+html.dark-mode .main-content .no-data,
+html.dark-mode .main-content .chart-track,
+html.dark-mode .main-content .filter-field,
+html.dark-mode .system-dialog-card,
+html.dark-mode .system-toast,
+html.dark-mode .login-container,
+html.dark-mode .login-card,
+html.dark-mode .signup-panel,
+html.dark-mode .register-container,
+html.dark-mode .register-card {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+    box-shadow: none !important;
+}
+
+html.dark-mode .main-content [class*="card"]::before,
+html.dark-mode .main-content [class*="panel"]::before,
+html.dark-mode .main-content [class*="box"]::before,
+html.dark-mode .main-content [class*="card"]::after,
+html.dark-mode .main-content [class*="panel"]::after,
+html.dark-mode .main-content [class*="box"]::after {
+    border-color: #39556c !important;
+}
+
+html.dark-mode input,
+html.dark-mode select,
+html.dark-mode textarea,
+html.dark-mode .search-input {
+    background: #101e2c !important;
+    color: #f8fafc !important;
+    border-color: #527087 !important;
+}
+
+html.dark-mode input::placeholder,
+html.dark-mode textarea::placeholder { color: #94a3b8 !important; }
+html.dark-mode option { background: #1a2a3a; color: #f8fafc; }
+
+html.dark-mode table,
+html.dark-mode tr,
+html.dark-mode thead,
+html.dark-mode tbody,
+html.dark-mode .table-row {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode a:not(.nav-item) { color: #7dd3fc !important; }
+
+/* Components that previously had a forced black font or white background. */
+html.dark-mode button,
+html.dark-mode .stat-icon,
+html.dark-mode .quick-action,
+html.dark-mode .quick-action strong,
+html.dark-mode .quick-action small,
+html.dark-mode .budget-pie-center,
+html.dark-mode .budget-pie-center strong,
+html.dark-mode .budget-pie-center span,
+html.dark-mode .dilg-budget-pie strong,
+html.dark-mode .dilg-budget-pie span,
+html.dark-mode .dilg-pie-heading span,
+html.dark-mode .dilg-pie-heading h2,
+html.dark-mode .dilg-pie-heading p,
+html.dark-mode .dilg-pie-legend p,
+html.dark-mode .dilg-pie-legend strong,
+html.dark-mode .dilg-pie-legend small {
+    color: #f8fafc !important;
+}
+
+html.dark-mode .quick-action,
+html.dark-mode .stat-icon,
+html.dark-mode .pending-summary,
+html.dark-mode .budget-breakdown-item,
+html.dark-mode .dilg-budget-pie-panel,
+html.dark-mode .dilg-pie-legend > div {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+/* DILG and Barangay dashboard summary cards: every label, number and icon stays readable. */
+html.dark-mode .stats-grid .stat-card {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .stats-grid .stat-status,
+html.dark-mode .stats-grid .stat-title,
+html.dark-mode .stats-grid .stat-value,
+html.dark-mode .stats-grid .stat-description,
+html.dark-mode .stats-grid .stat-icon {
+    color: #ffffff !important;
+}
+
+html.dark-mode .stats-grid .stat-icon {
+    background: #254963 !important;
+    border-color: #4f7893 !important;
+}
+
+/* DILG Barangays directory and Barangay Details summary cards. */
+html.dark-mode .barangay-count,
+html.dark-mode .stats .stat-card,
+html.dark-mode .utilization-card,
+html.dark-mode .financial-box,
+html.dark-mode .status-item {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .barangay-count span,
+html.dark-mode .barangay-count strong,
+html.dark-mode .stats .stat-card span,
+html.dark-mode .stats .stat-card strong,
+html.dark-mode .financial-label,
+html.dark-mode .financial-value,
+html.dark-mode .status-item,
+html.dark-mode .utilization-card h2,
+html.dark-mode .utilization-card h3,
+html.dark-mode .utilization-card p {
+    color: #ffffff !important;
+}
+
+/* The centers of the doughnut charts use the card color instead of white. */
+html.dark-mode .budget-pie {
+    background: conic-gradient(#38bdf8 0 var(--utilization), #28465d var(--utilization) 100%) !important;
+}
+
+html.dark-mode .budget-pie::after,
+html.dark-mode .dilg-budget-pie::before {
+    background: #1a2a3a !important;
+}
+
+html.dark-mode .dilg-budget-pie {
+    background: conic-gradient(#38bdf8 0 var(--spent-percent), #28465d var(--spent-percent) 100%) !important;
+}
+
+html.dark-mode .remaining-dot,
+html.dark-mode .remaining-key { background: #28465d !important; border-color: #38bdf8 !important; }
+
+/* Final white-surface audit: sign-up, validation, notifications, details and modals. */
+html.dark-mode .date-box,
+html.dark-mode .brand-mark,
+html.dark-mode .approval-note,
+html.dark-mode .detail-item,
+html.dark-mode .detail-description,
+html.dark-mode .project-status,
+html.dark-mode .status-badge,
+html.dark-mode .status,
+html.dark-mode .badge,
+html.dark-mode .close-btn,
+html.dark-mode .secondary-btn,
+html.dark-mode .cancel-btn,
+html.dark-mode .notification-panel,
+html.dark-mode .notification-title,
+html.dark-mode .notification-list,
+html.dark-mode .notification-item,
+html.dark-mode .approval-modal-card,
+html.dark-mode .approval-modal-cancel,
+html.dark-mode .verification-pending {
+    background: #1a2a3a !important;
+    color: #f8fafc !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .notification-item::before {
+    background: #254963 !important;
+    color: #ffffff !important;
+}
+
+html.dark-mode .approval-modal-card h2,
+html.dark-mode .approval-modal-card p,
+html.dark-mode .system-dialog-card h2,
+html.dark-mode .system-dialog-card p,
+html.dark-mode .date-box span,
+html.dark-mode .date-box strong,
+html.dark-mode .brand-mark,
+html.dark-mode .approval-note,
+html.dark-mode .approval-note strong {
+    color: #ffffff !important;
+}
+
+/* Add New Project form: custom amount and document controls must not stay white. */
+html.dark-mode .main-content .input-money,
+html.dark-mode .main-content .document-upload-group {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .main-content .input-money span {
+    background: #254963 !important;
+    color: #ffffff !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .main-content input[type="file"]::file-selector-button {
+    border: 1px solid #7dd3fc;
+    border-radius: 6px;
+    background: #7dd3fc;
+    color: #111827;
+    font-weight: 700;
+}
+
+/* Barangay Citizen Feedback: no white cards and all record labels stay readable. */
+html.dark-mode .main-content .project-info .info-box,
+html.dark-mode .main-content .feedback-card {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+    box-shadow: none !important;
+}
+
+html.dark-mode .main-content .feedback-content {
+    background: #101e2c !important;
+    border-color: #39556c !important;
+    color: #ffffff !important;
+}
+
+html.dark-mode .main-content .info-label,
+html.dark-mode .main-content .feedback-count,
+html.dark-mode .main-content .feedback-project,
+html.dark-mode .main-content .feedback-citizen,
+html.dark-mode .main-content .feedback-citizen strong,
+html.dark-mode .main-content .feedback-date,
+html.dark-mode .main-content .feedback-label {
+    color: #ffffff !important;
+}
+
+/* Barangay Projects: project information stays clear in dark mode. */
+html.dark-mode .main-content .panel-label,
+html.dark-mode .main-content .project-description,
+html.dark-mode .main-content .project-info .info-label,
+html.dark-mode .main-content .project-info .info-value,
+html.dark-mode .main-content .progress-header,
+html.dark-mode .main-content .progress-header span,
+html.dark-mode .main-content .progress-header strong {
+    color: #ffffff !important;
+}
+
+html.dark-mode .main-content .project-actions .edit-btn,
+html.dark-mode .main-content .project-actions .delete-btn {
+    border-color: #7dd3fc !important;
+    background: #7dd3fc !important;
+    color: #111827 !important;
+}
+
+html.dark-mode .main-content .project-actions .edit-btn:hover,
+html.dark-mode .main-content .project-actions .delete-btn:hover {
+    background: #bae6fd !important;
+    color: #111827 !important;
+}
+
+html.dark-mode .main-content .return-project-btn {
+    color: #111827 !important;
+}
+
+/* DILG notifications are buttons so submitted projects can be opened for validation. */
+.notification-item[data-validation-project-id] {
+    width: 100%;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.notification-item[data-validation-project-id]:focus-visible {
+    outline: 3px solid #7dd3fc;
+    outline-offset: 2px;
+}
+
+/* DILG project status badges: clearer at a glance without making cards crowded. */
+.project-card .status,
+.project-card .verification-badge,
+.project-card .monitoring-badge {
+    padding: 7px 11px;
+    font-size: 10px;
+    letter-spacing: .45px;
+}
+
+/* Secondary panel headings use the same complete rounded treatment as page headers. */
+.main-content .panel > .panel-header {
+    margin-bottom: 20px;
+    padding: 17px 18px;
+    border: 1px solid #bae6fd !important;
+    border-radius: 11px;
+    background: #f0f9ff;
+}
+
+html.dark-mode .main-content .panel > .panel-header {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+/* Dashboard overview headings are complete rounded blocks, not square text rows. */
+.main-content .section-heading {
+    margin: 22px 0 16px;
+    padding: 17px 18px;
+    border: 1px solid #bae6fd;
+    border-radius: 11px;
+    background: #f0f9ff;
+}
+
+/* Projects and Project Validation use the cleaner Barangays-style header. */
+.dilg-projects-page .notification-wrapper {
+    display: none !important;
+}
+
+html.dark-mode .main-content .section-heading {
+    border-color: #39556c !important;
+    background: #1a2a3a !important;
+}
+
+/* Shared project-card details: compact, scannable metadata and loading state. */
+.project-last-updated {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 9px;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.info-icon {
+    display: inline-flex;
+    width: 15px;
+    align-items: center;
+    justify-content: center;
+    color: #0284c7;
+    font-weight: 800;
+}
+
+.project-skeleton {
+    display: grid;
+    gap: 12px;
+    min-height: 220px;
+    padding: 22px;
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.skeleton-line,
+.skeleton-info-row span {
+    display: block;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e0f2fe 20%, #f8fafc 45%, #e0f2fe 70%);
+    background-size: 200% 100%;
+    animation: projectSkeletonPulse 1.25s ease-in-out infinite;
+}
+
+.skeleton-title { width: 44%; height: 20px; }
+.skeleton-text { width: 88%; height: 12px; }
+.skeleton-text.short { width: 62%; }
+.skeleton-info-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 5px; }
+.skeleton-info-row span { height: 54px; }
+.skeleton-action { width: 135px; height: 38px; margin-top: auto; }
+
+@keyframes projectSkeletonPulse {
+    from { background-position: 100% 0; }
+    to { background-position: -100% 0; }
+}
+
+html.dark-mode .project-last-updated {
+    color: #ffffff !important;
+}
+
+html.dark-mode .info-icon {
+    color: #7dd3fc !important;
+}
+
+html.dark-mode .project-skeleton {
+    border-color: #39556c;
+    background: #1a2a3a;
+}
+
+html.dark-mode .skeleton-line,
+html.dark-mode .skeleton-info-row span {
+    background: linear-gradient(90deg, #254963 20%, #345a72 45%, #254963 70%);
+    background-size: 200% 100%;
+}
+
+@media (max-width: 600px) {
+    .skeleton-info-row { grid-template-columns: 1fr; }
+}
+
+html.dark-mode .approval-modal-actions button:hover,
+html.dark-mode .system-dialog-actions button:hover,
+html.dark-mode .register-card button:hover,
+html.dark-mode .login-card button:hover,
+html.dark-mode .signup-panel button:hover {
+    background: #28678f !important;
+    color: #ffffff !important;
+}
+
+/* Approve Citizen confirmation actions stay readable on their light action colors. */
+html.dark-mode .approval-modal-confirm,
+html.dark-mode .approval-modal-cancel,
+html.dark-mode .system-dialog-confirm,
+html.dark-mode .system-dialog-cancel {
+    color: #111827 !important;
+}
+
+html.dark-mode .approval-modal-confirm,
+html.dark-mode .system-dialog-confirm {
+    background: #7dd3fc !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .approval-modal-cancel,
+html.dark-mode .system-dialog-cancel {
+    background: #e0f2fe !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .approval-modal-actions .approval-modal-confirm:hover,
+html.dark-mode .approval-modal-actions .approval-modal-cancel:hover,
+html.dark-mode .system-dialog-actions .system-dialog-confirm:hover,
+html.dark-mode .system-dialog-actions .system-dialog-cancel:hover {
+    background: #bae6fd !important;
+    color: #111827 !important;
+}
+
+/* DILG Project Validation: Barangay/Budget/Spent/Remaining and Citizen Feedback blocks. */
+html.dark-mode .project-info > div,
+html.dark-mode .dilg-project-feedback,
+html.dark-mode .dilg-feedback-item,
+html.dark-mode .dilg-no-feedback,
+html.dark-mode .project-utilization {
+    background: #1a2a3a !important;
+    color: #f8fafc !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .project-info span,
+html.dark-mode .project-info strong,
+html.dark-mode .dilg-project-feedback .documents-title,
+html.dark-mode .dilg-feedback-meta,
+html.dark-mode .dilg-feedback-meta strong,
+html.dark-mode .dilg-feedback-item p,
+html.dark-mode .dilg-no-feedback,
+html.dark-mode .utilization-header,
+html.dark-mode .utilization-header span,
+html.dark-mode .utilization-header strong {
+    color: #ffffff !important;
+}
+
+html.dark-mode .progress { background: #28465d !important; }
+
+/* DILG validation chips and supporting-document areas must not remain white. */
+html.dark-mode .verification-badge,
+html.dark-mode .monitoring-badge,
+html.dark-mode .verification-draft,
+html.dark-mode .verification-pending,
+html.dark-mode .verification-verified,
+html.dark-mode .verification-returned,
+html.dark-mode .monitoring-validation,
+html.dark-mode .monitoring-on-track,
+html.dark-mode .monitoring-completed,
+html.dark-mode .monitoring-returned,
+html.dark-mode .monitoring-risk,
+html.dark-mode .project-documents,
+html.dark-mode .no-documents,
+html.dark-mode .document-row {
+    background: #1a2a3a !important;
+    color: #ffffff !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .verification-badge,
+html.dark-mode .monitoring-badge,
+html.dark-mode .project-documents .documents-title,
+html.dark-mode .project-documents .document-row strong,
+html.dark-mode .project-documents .document-row span,
+html.dark-mode .no-documents {
+    color: #ffffff !important;
+}
+
+/* Sky-blue actions retain formal black text for strong contrast in Dark Mode. */
+html.dark-mode .main-content .view-project-btn,
+html.dark-mode .main-content .verify-project-btn,
+html.dark-mode .main-content .export-document-btn,
+html.dark-mode .main-content .view-btn,
+html.dark-mode .main-content .primary-btn,
+html.dark-mode .main-content .submit-btn,
+html.dark-mode .main-content .save-btn,
+html.dark-mode .main-content .feedback-btn,
+html.dark-mode .main-content .view-details-btn,
+html.dark-mode .main-content .welcome-projects-link,
+html.dark-mode .main-content .header-action,
+html.dark-mode .main-content .quick-action {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .main-content .barangay-document-btn,
+html.dark-mode .main-content .export-document-btn,
+html.dark-mode .main-content .details-document-btn,
+html.dark-mode .main-content .barangay-document-action {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .main-content .barangay-document-btn:hover,
+html.dark-mode .main-content .export-document-btn:hover,
+html.dark-mode .main-content .details-document-btn:hover,
+html.dark-mode .main-content .barangay-document-action:hover {
+    background: #bae6fd !important;
+    color: #111827 !important;
+}
+
+html.dark-mode .main-content .view-project-btn:hover,
+html.dark-mode .main-content .verify-project-btn:hover,
+html.dark-mode .main-content .export-document-btn:hover,
+html.dark-mode .main-content .view-btn:hover,
+html.dark-mode .main-content .primary-btn:hover,
+html.dark-mode .main-content .submit-btn:hover,
+html.dark-mode .main-content .save-btn:hover,
+html.dark-mode .main-content .feedback-btn:hover,
+html.dark-mode .main-content .view-details-btn:hover,
+html.dark-mode .main-content .welcome-projects-link:hover,
+html.dark-mode .main-content .header-action:hover,
+html.dark-mode .main-content .quick-action:hover {
+    background: #bae6fd !important;
+    color: #111827 !important;
+}
+
+html.dark-mode .main-content .close-btn,
+html.dark-mode .main-content .back-btn {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .main-content .close-btn:hover,
+html.dark-mode .main-content .back-btn:hover {
+    background: #bae6fd !important;
+    color: #111827 !important;
+}
+
+/* Citizen registration submitted screen. */
+html.dark-mode body > .container > .card,
+html.dark-mode .container > .card {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+    box-shadow: none !important;
+}
+
+html.dark-mode .container > .card h1,
+html.dark-mode .container > .card p,
+html.dark-mode .container > .card .logo-text h2,
+html.dark-mode .container > .card .logo-text span,
+html.dark-mode .container > .card .footer,
+html.dark-mode .container > .card .status {
+    color: #ffffff !important;
+}
+
+html.dark-mode .container > .card .status,
+html.dark-mode .container > .card .icon {
+    background: #254963 !important;
+    border-color: #4f7893 !important;
+}
+
+/* All text inside sky-blue quick action cards stays black. */
+html.dark-mode .main-content .quick-action,
+html.dark-mode .main-content .quick-action *,
+html.dark-mode .main-content .quick-action .quick-icon {
+    color: #111827 !important;
+}
+
+/* Login and Create Citizen Account actions: sky blue with black text. */
+html.dark-mode .login-button,
+html.dark-mode .register-button,
+html.dark-mode .signup-submit,
+html.dark-mode .show-password,
+html.dark-mode .signup-password-toggle {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .login-button:hover,
+html.dark-mode .register-button:hover,
+html.dark-mode .signup-submit:hover,
+html.dark-mode .show-password:hover,
+html.dark-mode .signup-password-toggle:hover {
+    background: #bae6fd !important;
+    color: #111827 !important;
+}
+
+/* Barangay project and citizen-approval controls. */
+html.dark-mode .add-btn {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .add-btn:hover { background: #bae6fd !important; color: #111827 !important; }
+
+html.dark-mode .guide-number,
+html.dark-mode .project-number,
+html.dark-mode .record-number {
+    color: #111827 !important;
+}
+
+html.dark-mode .request-card,
+html.dark-mode .request-info,
+html.dark-mode .request-card .info-box {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .request-name,
+html.dark-mode .request-email,
+html.dark-mode .request-card .info-label,
+html.dark-mode .request-card .info-value {
+    color: #ffffff !important;
+}
+
+html.dark-mode .pending-badge {
+    background: #254963 !important;
+    color: #ffffff !important;
+    border-color: #4f7893 !important;
+}
+
+html.dark-mode .approve-btn,
+html.dark-mode .reject-btn {
+    color: #111827 !important;
+}
+
+html.dark-mode .approve-btn {
+    background: #7dd3fc !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .reject-btn {
+    background: #fecaca !important;
+    border-color: #fecaca !important;
+}
+
+/* Keep the Barangay header aligned with the DILG SYSTEM 2026 + mode controls. */
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar-right .date-box,
+.topbar-right .dark-mode-header {
+    flex: 0 0 auto;
+}
+
+/* Barangay Dashboard's Add Project card and 01/02/03 guide markers. */
+html.dark-mode #addProjectBtn2,
+html.dark-mode #addProjectBtn2 *,
+html.dark-mode a.barangay-welcome-action {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+    border-color: #7dd3fc !important;
+}
+
+html.dark-mode .barangay-guide-item {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .barangay-guide-item > span {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+}
+
+/* Citizen Dashboard summary, chart, guide, filter, and project-information surfaces. */
+html.dark-mode .citizen-summary-page .overview-total,
+html.dark-mode .citizen-summary-page .project-status-chart,
+html.dark-mode .citizen-summary-page .chart-track,
+html.dark-mode .citizen-summary-page .chart-loading,
+html.dark-mode .citizen-summary-page .guide-item,
+html.dark-mode .citizen-summary-page .project-schedule,
+html.dark-mode .citizen-summary-page .project-info-item,
+html.dark-mode .citizen-summary-page .project-filters,
+html.dark-mode .citizen-summary-page .filter-field select,
+html.dark-mode .citizen-summary-page .loading,
+html.dark-mode .citizen-summary-page .empty {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+    color: #ffffff !important;
+}
+
+html.dark-mode .citizen-summary-page .overview-total span,
+html.dark-mode .citizen-summary-page .overview-total strong,
+html.dark-mode .citizen-summary-page .chart-label,
+html.dark-mode .citizen-summary-page .chart-label strong,
+html.dark-mode .citizen-summary-page .guide-item strong,
+html.dark-mode .citizen-summary-page .guide-item p,
+html.dark-mode .citizen-summary-page .project-schedule span,
+html.dark-mode .citizen-summary-page .project-schedule strong,
+html.dark-mode .citizen-summary-page .project-info-item span,
+html.dark-mode .citizen-summary-page .project-info-item strong,
+html.dark-mode .citizen-summary-page .filter-field label {
+    color: #ffffff !important;
+}
+
+html.dark-mode .citizen-summary-page .guide-number {
+    background: #7dd3fc !important;
+    color: #111827 !important;
+}
+
+/* Citizen Projects page: Target Completion and other schedule information. */
+html.dark-mode .project-schedule,
+html.dark-mode .project-info-item {
+    background: #1a2a3a !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .project-schedule span,
+html.dark-mode .project-schedule strong,
+html.dark-mode .project-info-item span,
+html.dark-mode .project-info-item strong {
+    color: #ffffff !important;
+}
+
+/* Login's Create Citizen Account panel and the standalone citizen registration form. */
+html.dark-mode .signup-wrapper .signup-form-section,
+html.dark-mode .signup-wrapper .signup-form-content,
+html.dark-mode .signup-wrapper .signup-note,
+html.dark-mode .signup-wrapper .signup-login-link button,
+html.dark-mode .login-wrapper .login-section,
+html.dark-mode .register-card .register-form,
+html.dark-mode .register-card .form-group {
+    background: #1a2a3a !important;
+    color: #f8fafc !important;
+    border-color: #39556c !important;
+}
+
+html.dark-mode .signup-wrapper .signup-header h2,
+html.dark-mode .signup-wrapper .signup-header p,
+html.dark-mode .signup-wrapper .signup-note,
+html.dark-mode .signup-wrapper .signup-note strong,
+html.dark-mode .signup-wrapper .signup-login-link,
+html.dark-mode .signup-wrapper label,
+html.dark-mode .register-card label,
+html.dark-mode .register-card .login-link,
+html.dark-mode .register-card .footer {
+    color: #ffffff !important;
+}
+
+html.dark-mode .signup-wrapper .signup-password-toggle:hover,
+html.dark-mode .signup-wrapper .signup-login-link button:hover {
+    background: #28678f !important;
+    color: #ffffff !important;
+}
+
+.dark-mode-floating {
+    position: fixed;
+    top: 17px;
+    right: 24px;
+    z-index: 1200;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    padding: 4px 11px 4px 6px;
+    border: 1px solid #bae6fd;
+    border-radius: 22px;
+    background: #ffffff;
+    color: #111827;
+    font: 600 11px "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(14, 116, 144, .13);
+    transition: background-color .38s ease, color .28s ease, border-color .38s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.dark-mode-floating:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(14, 116, 144, .2);
+}
+
+.dark-mode-floating:active { transform: scale(.96); }
+
+/* Beside the SYSTEM 2026 card in dashboard headers. */
+.dark-mode-header {
+    position: static;
+    z-index: auto;
+    flex: 0 0 auto;
+    margin-left: 9px;
+}
+
+.theme-toggle-track {
+    position: relative;
+    display: inline-flex;
+    width: 27px;
+    height: 27px;
+    align-items: center;
+    border-radius: 50%;
+    background: #e0f2fe;
+    overflow: hidden;
+    transition: background-color .38s ease;
+}
+
+.theme-toggle-knob {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    color: #0369a1 !important;
+    font-size: 14px;
+    line-height: 1;
+    transition: transform .45s cubic-bezier(.2, .8, .2, 1), color .28s ease;
+}
+
+html.dark-mode .dark-mode-floating {
+    background: #7dd3fc;
+    color: #111827;
+    border-color: #7dd3fc;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
+}
+
+html.dark-mode .dark-mode-floating .dark-mode-label { color: #111827 !important; }
+
+html.dark-mode .theme-toggle-track { background: #0d2438; }
+html.dark-mode .theme-toggle-knob {
+    color: #fde68a !important;
+    transform: rotate(180deg) scale(1.06);
+}
+
+@media (max-width: 700px) {
+    .dark-mode-floating .dark-mode-label { display: none; }
+    .dark-mode-floating { width: 40px; justify-content: center; padding: 0; }
+    .dark-mode-header { margin-left: 6px; }
+}
+
+/* Adaptive sidebar: deep blue navigation rail in dark mode. */
+html.dark-mode .sidebar {
+    background-color: #0b2538 !important;
+    background-image:
+        linear-gradient(rgba(125, 211, 252, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125, 211, 252, 0.045) 1px, transparent 1px),
+        radial-gradient(circle at 18% 90%, rgba(14, 165, 233, 0.20), transparent 38%),
+        linear-gradient(180deg, #123d59 0%, #0e3048 48%, #091f31 100%) !important;
+    background-size: 28px 28px, 28px 28px, auto, auto !important;
+    border-right-color: #28536d !important;
+    box-shadow:
+        inset -1px 0 0 rgba(125, 211, 252, 0.16),
+        6px 0 24px rgba(0, 0, 0, 0.20) !important;
+}
+
+html.dark-mode .sidebar .sidebar-top,
+html.dark-mode .sidebar .sidebar-bottom,
+html.dark-mode .sidebar .navigation {
+    background: transparent !important;
+}
+
+html.dark-mode .sidebar .logo {
+    background: rgba(125, 211, 252, 0.065) !important;
+    box-shadow: inset 0 1px 0 rgba(186, 230, 253, 0.15) !important;
+}
+
+html.dark-mode .sidebar .nav-item.active,
+html.dark-mode .sidebar .nav-item:hover {
+    background: rgba(224, 242, 254, 0.94) !important;
+    color: #0f2537 !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 7px 18px rgba(0, 0, 0, 0.20) !important;
+}
+
+html.dark-mode .sidebar .nav-item.active span,
+html.dark-mode .sidebar .nav-item.active .nav-icon,
+html.dark-mode .sidebar .nav-item:hover span,
+html.dark-mode .sidebar .nav-item:hover .nav-icon {
+    color: #0f2537 !important;
+}
+
+html.dark-mode .sidebar .sidebar-divider {
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.48), transparent) !important;
+}
+
+/* Numeric dashboard values stay solid black in light mode. */
+html:not(.dark-mode) .stat-value,
+html:not(.dark-mode) .info-value,
+html:not(.dark-mode) .feedback-count,
+html:not(.dark-mode) .barangay-count strong,
+html:not(.dark-mode) .overview-total strong,
+html:not(.dark-mode) .guide-number,
+html:not(.dark-mode) .date-box strong,
+html:not(.dark-mode) .utilization-value strong,
+html:not(.dark-mode) .utilization-header strong,
+html:not(.dark-mode) .budget-pie-center strong,
+html:not(.dark-mode) .project-utilization strong,
+html:not(.dark-mode) .project-info .info-value,
+html:not(.dark-mode) #utilization,
+html:not(.dark-mode) #utilizationText,
+html:not(.dark-mode) [class*="count-value"],
+html:not(.dark-mode) [class*="total-value"] {
+    color: #000000 !important;
+}
+
+/* The logo keeps its square shape when the desktop sidebar is collapsed. */
+@media (min-width: 1001px) {
+    html.sidebar-collapsed .sidebar .logo,
+    body.sidebar-collapsed .sidebar .logo {
+        width: 42px !important;
+        min-width: 42px !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+        padding: 0 !important;
+    }
+
+    html.sidebar-collapsed .sidebar .logo-mark.brand-logo-mark,
+    body.sidebar-collapsed .sidebar .logo-mark.brand-logo-mark,
+    html.sidebar-collapsed .sidebar .logo-mark.brand-logo-mark img,
+    body.sidebar-collapsed .sidebar .logo-mark.brand-logo-mark img {
+        width: 42px !important;
+        min-width: 42px !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        flex: 0 0 42px !important;
+        aspect-ratio: 1 / 1;
+    }
+
+    html.sidebar-collapsed .sidebar-toggle,
+    body.sidebar-collapsed .sidebar-toggle {
+        top: 84px !important;
+    }
+}
+
+/* Responsive layout shared by Barangay, DILG, Citizen, and account pages. */
+@media (max-width: 1000px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+
+    .sidebar {
+        width: 76px !important;
+        min-width: 76px !important;
+        padding: 20px 12px !important;
+    }
+
+    .sidebar .logo { justify-content: center; padding: 0 0 24px !important; }
+    .sidebar .logo > :not(.logo-mark),
+    .sidebar .nav-label,
+    .sidebar .nav-item > span:last-child,
+    .sidebar .logout-btn > span:last-child,
+    .sidebar .sidebar-divider { display: none !important; }
+
+    .sidebar .nav-item,
+    .sidebar .logout-btn,
+    .sidebar .navigation .sidebar-toggle {
+        width: 40px !important;
+        min-width: 40px !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+        justify-content: center !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .main-content {
+        width: calc(100% - 76px) !important;
+        max-width: none !important;
+        margin-left: 76px !important;
+        padding: 22px !important;
+    }
+
+    .topbar,
+    .page-header,
+    .section-heading {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+    }
+
+    .topbar-right,
+    .header-actions,
+    .actions {
+        width: 100%;
+        justify-content: flex-start !important;
+        flex-wrap: wrap;
+    }
+
+    .stats-grid,
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+    .dashboard-grid,
+    .content-grid,
+    .financial-grid,
+    .details-grid,
+    .form-grid { grid-template-columns: 1fr !important; }
+
+    .project-info { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+    .project-filters,
+    .filter-grid,
+    .search-section { align-items: stretch !important; }
+
+    .filter-field,
+    .search-box { min-width: min(100%, 220px) !important; }
+
+    .table-container,
+    .table-wrapper,
+    .projects-table-wrapper { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    .dilg-pie-layout,
+    .budget-pie-layout { flex-wrap: wrap; }
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        width: 64px !important;
+        min-width: 64px !important;
+        padding: 16px 8px !important;
+    }
+
+    .main-content {
+        width: calc(100% - 64px) !important;
+        margin-left: 64px !important;
+        padding: 16px 13px 24px !important;
+    }
+
+    .sidebar .nav-item,
+    .sidebar .logout-btn,
+    .sidebar .navigation .sidebar-toggle {
+        width: 38px !important;
+        min-width: 38px !important;
+    }
+
+    .topbar,
+    .page-header,
+    .panel,
+    .form-container,
+    .form-card,
+    .content-card,
+    .project-card,
+    .stat-card,
+    .dilg-vertical-chart,
+    .dilg-budget-pie-panel { padding: 16px !important; }
+
+    .topbar h1,
+    .page-header h1 { font-size: 23px !important; }
+
+    .topbar p,
+    .page-header p,
+    .section-heading > p { text-align: left !important; }
+
+    .topbar-right { gap: 7px !important; }
+    .date-box { min-width: 68px !important; padding: 8px 9px !important; }
+    .dark-mode-header { min-height: 34px; margin-left: 0; }
+    .dark-mode-header .dark-mode-label { display: none; }
+
+    .stats-grid,
+    .stats { grid-template-columns: 1fr !important; }
+
+    .project-info { grid-template-columns: 1fr !important; }
+
+    .project-actions,
+    .card-actions,
+    .form-actions { align-items: stretch !important; flex-direction: column; }
+
+    .project-actions button,
+    .card-actions button,
+    .form-actions button,
+    .project-actions a,
+    .card-actions a { width: 100%; }
+
+    .project-filters,
+    .filter-grid,
+    .search-section { flex-direction: column !important; }
+
+    .filter-field,
+    .search-box,
+    .barangay-count { width: 100% !important; max-width: none !important; }
+
+    .budget-pie,
+    .dilg-budget-pie { width: 136px !important; height: 136px !important; flex-basis: 136px !important; }
+
+    .budget-pie::after { width: 100px !important; height: 100px !important; }
+    .dilg-budget-pie::before { width: 100px !important; height: 100px !important; }
+
+    .login-wrapper,
+    .signup-wrapper,
+    .register-card { width: calc(100% - 28px) !important; max-width: none !important; }
+
+    .register-card,
+    .signup-wrapper { grid-template-columns: 1fr !important; }
+
+    .signup-form,
+    .register-form { grid-template-columns: 1fr !important; }
+}
+/* DILG Projects and Citizen Feedback tabs and table. */
+html.dark-mode .dilg-projects-page .dilg-content-tabs { border-color: #334155; background: #111827; }
+html.dark-mode .dilg-projects-page .dilg-content-tab,
+html.dark-mode .dilg-projects-page .dilg-content-tab,
+html.dark-mode .dilg-projects-page .dilg-content-tab span { border-color: #60a5fa; background: #93c5fd !important; color: #000 !important; }
+html.dark-mode .dilg-projects-page .dilg-content-tab.active,
+html.dark-mode .dilg-projects-page .dilg-content-tab.active span { border-color: #3b82f6; background: #60a5fa !important; box-shadow: none; color: #000 !important; }
+html.dark-mode .dilg-projects-page .dilg-content-tab:hover,
+html.dark-mode .dilg-projects-page .dilg-content-tab:hover span { border-color: #3b82f6; background: #60a5fa !important; color: #000 !important; }
+html.dark-mode .dilg-projects-page .tab-count { background: #273b5d; color: #bfdbfe; }
+html.dark-mode .dilg-projects-page .feedback-table-intro h3,
+html.dark-mode .dilg-projects-page .dilg-feedback-empty h3 { color: #f1f5f9; }
+html.dark-mode .dilg-projects-page .feedback-table-intro p,
+html.dark-mode .dilg-projects-page .dilg-feedback-empty p { color: #cbd5e1; }
+html.dark-mode .dilg-projects-page .dilg-feedback-table-wrap,
+html.dark-mode .dilg-projects-page .dilg-feedback-table tbody tr { border-color: #374151; background: #111827; }
+html.dark-mode .dilg-projects-page .dilg-feedback-table { color: #e5e7eb; }
+html.dark-mode .dilg-projects-page .dilg-feedback-table th { border-color: #374151; background: #1f2937; color: #cbd5e1; }
+html.dark-mode .dilg-projects-page .dilg-feedback-table td { border-color: #273244; }
+html.dark-mode .dilg-projects-page .dilg-feedback-table tbody tr:hover { background: #172033; }
+html.dark-mode .dilg-projects-page .dilg-feedback-table td:nth-child(2) strong { color: #f3f4f6; }
+html.dark-mode .dilg-projects-page .feedback-barangay { border-color: #334155; background: #1e293b; color: #bfdbfe; }
+html.dark-mode .dilg-projects-page .feedback-row-details p { color: #d1d5db; }
+html.dark-mode .dilg-projects-page .feedback-row-details summary { color: #93c5fd; }
+html.dark-mode .dilg-projects-page .dilg-feedback-empty { color: #cbd5e1; }
+html.dark-mode .dilg-projects-page .feedback-empty-icon { border-color: #334155; background: #1e293b; color: #93c5fd; }
+html.dark-mode .dilg-projects-page .feedback-search input { border-color: #475569; background: #111827; color: #f3f4f6; }
+/* DILG per-barangay project table polish for dark mode. */
+html.dark-mode .dilg-project-table-summary { color: #cbd5e1; }
+html.dark-mode .dilg-project-table-wrap { border-color: #334155; background: #111827; box-shadow: 0 4px 16px rgba(0, 0, 0, .18); scrollbar-color: #475569 #111827; }
+html.dark-mode .dilg-project-table { color: #e5e7eb; }
+html.dark-mode .dilg-project-table th { border-color: #334155; background: #1e3a5f; color: #e2e8f0; }
+html.dark-mode .dilg-project-table td { border-color: #263548; background: #111827; }
+html.dark-mode .dilg-project-table tbody tr { border-color: #334155; background: #111827; }
+html.dark-mode .dilg-project-table tbody tr:nth-child(even) td { background: #172334; }
+html.dark-mode .dilg-project-table tbody tr:hover td { background: #1d3147; }
+html.dark-mode .dilg-project-table th:first-child,
+html.dark-mode .dilg-project-table td:first-child,
+html.dark-mode .dilg-project-title-cell span,
+html.dark-mode .dilg-project-schedule,
+html.dark-mode .dilg-project-table td:nth-child(5),
+html.dark-mode .dilg-project-table td:nth-child(8),
+html.dark-mode .dilg-project-table td:nth-child(10) { color: #cbd5e1; }
+html.dark-mode .dilg-project-title-cell strong { color: #f8fafc; }
+html.dark-mode .dilg-project-table td::before { color: #94a3b8; }
+html.dark-mode .dilg-project-table td:nth-child(6) { color: #93c5fd; }
+html.dark-mode .dilg-project-row-actions button { border-color: #64748b; background: #e2e8f0; color: #000 !important; }
+html.dark-mode .dilg-project-row-actions .dilg-project-view-btn { border-color: #93c5fd; background: #bfdbfe; color: #000 !important; }
+html.dark-mode .dilg-project-row-actions .dilg-project-edit-btn { border-color: #cbd5e1; background: #e5e7eb; color: #000 !important; }
+html.dark-mode .dilg-project-row-actions .dilg-project-delete-btn { border-color: #fca5a5; background: #fecaca; color: #000 !important; }
+html.dark-mode .dilg-project-actions-menu-row td { border-color: #334155 !important; background: #172334 !important; }
+html.dark-mode .dilg-project-actions-menu-row .dilg-project-row-actions button { color: #000 !important; }
+html.dark-mode .dilg-project-actions-toggle { border-color: #64748b; background: #e2e8f0; color: #000 !important; }
+html.dark-mode .dilg-project-actions-toggle { border-color: #64748b !important; background: #e2e8f0 !important; color: #000 !important; }
+html.dark-mode .dilg-project-actions-toggle:hover,
+html.dark-mode .dilg-project-actions-toggle[aria-expanded="true"] { border-color: #60a5fa !important; background: #bfdbfe !important; color: #000 !important; }
+html.dark-mode .dilg-project-row-actions .dilg-project-view-btn,
+html.dark-mode .dilg-project-row-actions .dilg-project-edit-btn { border-color: #7dd3fc !important; background: #7dd3fc !important; color: #111827 !important; }
+html.dark-mode .dilg-project-row-actions .dilg-project-delete-btn { border-color: #fca5a5 !important; background: #fecaca !important; color: #111827 !important; }
+@media (max-width: 900px) {
+    html.dark-mode .dilg-project-table tbody tr:not(.dilg-project-actions-menu-row) { border-color: #334155; background: #0f172a; }
+    html.dark-mode .dilg-project-table tbody tr:not(.dilg-project-actions-menu-row) td { border-color: #334155; background: #0f172a; }
+    html.dark-mode .dilg-project-actions-menu-row td { background: #172334 !important; }
+}

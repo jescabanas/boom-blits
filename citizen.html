@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Citizen Dashboard - Barangay Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/citizen.css?v=20261021-citizen-project-table"
+    >
+
+</head>
+
+
+<body class="citizen-dashboard-page">
+
+<div class="layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo"><div class="logo-mark">BT</div><div><h2>Barangay</h2><span>TRACKER</span></div></div>
+            <nav class="navigation">
+                <div class="nav-label">CITIZEN PORTAL</div>
+
+            <button
+                class="nav-item active"
+                id="dashboardBtn"
+            ><span class="nav-icon">⌂</span><span>Dashboard</span>
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="projectsBtn"
+            ><span class="nav-icon">▣</span><span>Projects</span>
+            </button>
+
+            </nav>
+        </div>
+        <div class="sidebar-bottom"><div class="sidebar-divider"></div><button
+            class="logout-btn"
+            id="logoutBtn"
+        ><span class="nav-icon">↪</span><span>Logout</span></button></div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main-content citizen-summary-page">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div><div class="page-label">COMMUNITY ACCESS</div>
+                <h1 id="citizenTitle">
+                    Citizen Dashboard
+                </h1>
+
+                <p id="welcome">
+                    Loading...
+                </p>
+
+            </div><div class="date-box"><span class="date-label">SYSTEM</span><strong>2026</strong></div>
+
+        </header>
+
+        <section class="citizen-welcome-card" aria-labelledby="citizenWelcomeTitle">
+            <div class="welcome-main">
+                <span class="panel-label">CITIZEN INFORMATION CENTER</span>
+                <h2 id="citizenWelcomeTitle">Barangay Project Transparency Portal</h2>
+                <p>Stay informed about public projects in <strong id="dashboardBarangayName">your barangay</strong>. View project progress, recorded spending, schedules, and submit feedback for projects that matter to your community.</p>
+                <a class="welcome-projects-link" href="citizen-projects.html">View Barangay Projects</a>
+            </div>
+            <div class="welcome-guide" aria-label="Available information">
+                <div class="guide-item"><span class="guide-number">01</span><div><strong>Project Progress</strong><p>Check if projects are ongoing or completed.</p></div></div>
+                <div class="guide-item"><span class="guide-number">02</span><div><strong>Recorded Spending</strong><p>Review the spending reported for every project.</p></div></div>
+                <div class="guide-item"><span class="guide-number">03</span><div><strong>Citizen Feedback</strong><p>Share your comments from the project details page.</p></div></div>
+            </div>
+        </section>
+
+
+
+        <!-- STATS -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card citizen-stat-card">
+
+                <div class="stat-title">
+                    Ongoing Projects
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="ongoingProjects"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <div class="stat-card citizen-stat-card">
+
+                <div class="stat-title">
+                    Completed Projects
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="completedProjects"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <div class="stat-card citizen-stat-card">
+
+                <div class="stat-title">
+                    Total Projects
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="totalProjects"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card citizen-stat-card">
+
+                <div class="stat-title">
+                    Total Project Spending
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="totalSpent"
+                >
+                    ₱0.00
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROJECT OVERVIEW -->
+
+        <section class="project-overview" aria-labelledby="projectOverviewTitle">
+            <div class="overview-heading">
+                <div><span class="panel-label">COMMUNITY PROJECT SUMMARY</span><h2 id="projectOverviewTitle">Project Status Overview</h2><p>Current progress of projects from your barangay.</p></div>
+                <div class="overview-total"><span>Recorded projects</span><strong id="chartProjectTotal">0</strong></div>
+            </div>
+            <div id="projectStatusChart" class="project-status-chart" role="img" aria-label="Project status bar graph">
+                <div class="chart-loading">Loading project overview...</div>
+            </div>
+        </section>
+
+
+
+        <!-- PROJECTS -->
+
+        <section class="panel projects-panel">
+
+            <div class="panel-header">
+
+                <div><span class="panel-label">PROJECT MONITORING</span>
+                    <h2>
+                        Barangay Projects
+                    </h2>
+
+                    <p id="projectDescription">
+                        Projects from your assigned barangay
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="project-filters" aria-label="Project filters">
+                <div class="filter-field"><label for="yearFilter">Year</label><select id="yearFilter"><option value="">All years</option></select></div>
+                <div class="filter-field"><label for="monthFilter">Month</label><select id="monthFilter"><option value="">All months</option></select></div>
+            </div>
+
+
+            <div id="projectsList">
+
+                <div class="loading">
+                    Loading projects...
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             PROJECT DETAILS
+        ====================================== -->
+
+        <section
+            class="panel details-panel"
+            id="projectDetailsPanel"
+            style="display: none;"
+        >
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2 id="detailsProjectName">
+                        Project Details
+                    </h2>
+
+                    <p>
+                        Detailed project information
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="close-btn"
+                    id="closeDetailsBtn"
+                >
+                    Close
+                </button>
+
+            </div>
+
+
+
+            <div id="projectDetails">
+
+                <!-- Details inserted by JavaScript -->
+
+            </div>
+
+
+
+            <!-- =====================================
+                 FEEDBACK
+            ====================================== -->
+
+            <div class="feedback-section">
+
+                <h3>
+                    Citizen Feedback
+                </h3>
+
+                <p>
+                    Share your feedback about this project.
+                </p>
+
+
+                <form id="feedbackForm">
+
+
+                    <input
+                        type="hidden"
+                        id="feedbackProjectId"
+                    >
+
+
+                    <div class="form-group">
+
+                        <label for="feedbackText">
+                            Your Feedback
+                        </label>
+
+                        <textarea
+                            id="feedbackText"
+                            rows="8"
+                            placeholder="Write your feedback..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="feedback-btn"
+                        id="feedbackSubmitBtn"
+                    >
+                        Submit Feedback
+                    </button>
+
+                </form>
+
+
+                <p id="feedbackMessage"></p>
+
+            </div>
+
+        </section>
+
+
+
+        <p id="message"></p>
+
+
+    </main>
+
+</div>
+
+
+<script
+    type="module"
+src="./js/citizen.js?v=20261021-citizen-project-table"
+></script>
+
+</body>
+
+</html>

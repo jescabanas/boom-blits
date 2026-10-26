@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>if (new URLSearchParams(window.location.search).get("source") === "dilg") document.documentElement.classList.add("dilg-project-mode");</script>
+    <style>html.dilg-project-mode:not(.dilg-nav-ready) .sidebar .navigation { visibility: hidden; }</style>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Project - Barangay Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/edit-project.css?v=20261005-file-design"
+    >
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>Barangay</h2>
+
+            <span>TRACKER</span>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <div class="nav-label">MAIN MENU</div>
+
+            <button
+                class="nav-item"
+                id="dashboardBtn"
+                type="button"
+            >
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="projectsBtn"
+                type="button"
+            >
+                <span class="nav-icon">▣</span>
+                <span>Projects</span>
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="addProjectBtn"
+                type="button"
+            >
+                <span class="nav-icon">＋</span>
+                <span>Add Project</span>
+            </button>
+
+            <a class="nav-item" href="barangay-feedback.html">
+                <span class="nav-icon">☷</span>
+                <span>Citizen Feedback</span>
+            </a>
+
+            <a class="nav-item" href="citizen-activity.html">
+                <span class="nav-icon">◷</span>
+                <span>Citizen Activity</span>
+            </a>
+
+        </nav>
+
+
+        <button
+            class="logout-btn"
+            id="logoutBtn"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Edit Project</h1>
+
+                <p>
+                    Update the project information
+                    and monitoring data.
+                </p>
+
+            </div>
+
+
+            <button
+                class="back-btn"
+                id="backBtn"
+                type="button"
+            >
+                ← Back to Projects
+            </button>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="form-container">
+
+            <form id="editProjectForm">
+
+                <!-- PROJECT NAME -->
+
+                <div class="form-group">
+
+                    <label for="projectName">
+                        Project Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="projectName"
+                        placeholder="Project name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="4"
+                        placeholder="Project description"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BUDGET / SPENT -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="budget">
+                            Allocated Budget
+                        </label>
+
+                        <div class="input-money">
+
+                            <span>₱</span>
+
+                            <input
+                                type="number"
+                                id="budget"
+                                min="0"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="spent">
+                            Amount Spent
+                        </label>
+
+                        <div class="input-money">
+
+                            <span>₱</span>
+
+                            <input
+                                type="number"
+                                id="spent"
+                                min="0"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="fundSource">Fund Source</label>
+                    <select id="fundSource" required>
+                        <option value="">Select fund source</option>
+                        <option value="20% NTA">20% NTA</option>
+                        <option value="Development Fund">Development Fund</option>
+                        <option value="Peace and Order Fund">Peace and Order Fund</option>
+                        <option value="Citizens Fund">Citizens Fund</option>
+                        <option value="Barangay General Fund">Barangay General Fund</option>
+                        <option value="Provincial/City Assistance">Provincial/City Assistance</option>
+                        <option value="National Government Grant">National Government Grant</option>
+                        <option value="Donations / Private Sector">Donations / Private Sector</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" id="fundSourceOther" placeholder="Specify fund source" maxlength="100" hidden>
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="form-group">
+
+                    <label for="status">
+                        Project Status
+                    </label>
+
+                    <select
+                        id="status"
+                        required
+                    >
+
+                        <option value="Planned">
+                            Planned
+                        </option>
+
+                        <option value="Ongoing">
+                            Ongoing
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PHYSICAL PROGRESS -->
+
+                <div class="form-group">
+
+                    <label for="physicalProgress">
+                        Physical Progress (%)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="physicalProgress"
+                        min="0"
+                        max="100"
+                        step="1"
+                        required
+                    >
+
+                    <small>
+                        Enter the current physical
+                        accomplishment of the project.
+                    </small>
+
+                </div>
+
+
+                <!-- DATES -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="startDate">
+                            Start Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="startDate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="targetDate">
+                            Target Completion
+                        </label>
+
+                        <input
+                            type="date"
+                            id="targetDate"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group document-upload-group">
+                    <label for="projectDocuments">Supporting Documents (up to 5 total)</label>
+                    <div id="existingDocuments" class="existing-documents">Loading documents...</div>
+                    <input type="file" id="projectDocuments" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    <ul id="newDocumentsList" class="selected-documents" aria-live="polite"></ul>
+                    <small>Add supporting PDF, DOC, or DOCX files (maximum 10 MB each). Existing files are kept.</small>
+                </div>
+
+                <!-- BUTTONS -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelBtn"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <p id="message"></p>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script
+    type="module"
+    src="./js/edit-project.js?v=20261021-dilg-project-menu-route"
+></script>
+
+</body>
+
+</html>

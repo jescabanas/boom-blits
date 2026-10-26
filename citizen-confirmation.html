@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Registration Confirmation - Barangay Tracker</title>
+
+    <link rel="stylesheet" href="./css/theme.css?v=20260903-dark-preload">
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================
+           BODY
+        ===================================== */
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 25px;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f5f7fb;
+
+            color:
+                #111827;
+        }
+
+
+        /* =====================================
+           CONTAINER
+        ===================================== */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 520px;
+        }
+
+
+        /* =====================================
+           CARD
+        ===================================== */
+
+        .card {
+
+            padding: 38px 35px;
+
+            background:
+                #ffffff;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.05
+                );
+        }
+
+
+        /* =====================================
+           LOGO
+        ===================================== */
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .logo-mark {
+
+            width: 43px;
+
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #122b68,
+                    #1d4ed8
+                );
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            box-shadow:
+                0 4px 10px
+                rgba(
+                    29,
+                    78,
+                    216,
+                    0.2
+                );
+        }
+
+
+        .logo-text {
+
+            text-align: left;
+        }
+
+
+        .logo-text h2 {
+
+            margin: 0;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 19px;
+
+            font-weight: 600;
+
+            color:
+                #111827;
+        }
+
+
+        .logo-text span {
+
+            display: block;
+
+            margin-top: 2px;
+
+            color:
+                #6b7280;
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* =====================================
+           SUCCESS ICON
+        ===================================== */
+
+        .icon {
+
+            width: 68px;
+
+            height: 68px;
+
+            margin:
+                0 auto 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                #eff6ff;
+
+            border:
+                1px solid
+                #bfdbfe;
+
+            color:
+                #1d4ed8;
+
+            font-size: 30px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================
+           TITLE
+        ===================================== */
+
+        h1 {
+
+            margin:
+                0 0 12px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 27px;
+
+            font-weight: 600;
+
+            color:
+                #111827;
+        }
+
+
+        /* =====================================
+           DESCRIPTION
+        ===================================== */
+
+        p {
+
+            margin:
+                0 0 12px;
+
+            color:
+                #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+        .status {
+
+            margin:
+                22px 0;
+
+            padding:
+                14px 16px;
+
+            border:
+                1px solid
+                #fed7aa;
+
+            border-radius: 9px;
+
+            background:
+                #fff7ed;
+
+            color:
+                #c2410c;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.2px;
+        }
+
+
+
+        /* =====================================
+           LOGIN BUTTON
+        ===================================== */
+
+        .login-btn {
+
+            display: block;
+
+            width: 100%;
+
+            margin-top: 23px;
+
+            padding:
+                13px 18px;
+
+            border-radius: 9px;
+
+            background:
+                #1d4ed8;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition:
+                background 0.2s,
+                transform 0.2s;
+        }
+
+
+        .login-btn:hover {
+
+            background:
+                #173b8f;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+
+            margin-top: 22px;
+
+            color:
+                #9ca3af;
+
+            font-size: 9px;
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 15px;
+            }
+
+
+            .card {
+
+                padding:
+                    30px 22px;
+            }
+
+
+            h1 {
+
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="card">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-mark">
+                BT
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Barangay
+                </h2>
+
+                <span>
+                    TRACKER
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUCCESS ICON -->
+
+        <div class="icon">
+            ✓
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1>
+            Registration Submitted
+        </h1>
+
+
+        <!-- DESCRIPTION -->
+
+        <p>
+
+            Your citizen account has been
+            successfully registered.
+
+        </p>
+
+
+        <p>
+
+            Your barangay will review your
+            information to confirm that you
+            are a resident of the selected
+            barangay.
+
+        </p>
+
+
+        <!-- STATUS -->
+
+        <div class="status" id="registrationStatus">
+
+            Status: Pending Barangay Confirmation
+
+        </div>
+
+
+
+        <!-- ADDITIONAL INFO -->
+
+        <p id="approvalMessage">
+
+            You cannot access the Citizen
+            Dashboard until your registration
+            has been approved.
+
+        </p>
+
+
+        <!-- LOGIN -->
+
+        <a
+            href="login.html"
+            class="login-btn"
+        >
+
+            Back to Login
+
+        </a>
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            Barangay Tracker • Citizen Registration System
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+</body>
+
+</html>

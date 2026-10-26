@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Citizen Registration - Barangay Tracker</title>
+
+    <link rel="prefetch" href="./login.html" as="document">
+    <link rel="prefetch" href="./js/login.js?v=20260902-panel-switch-direct" as="script">
+
+    <style>
+        @view-transition { navigation: auto; }
+        ::view-transition-old(root) { animation: authPageOut .12s ease-in both; }
+        ::view-transition-new(root) { animation: authPageIn .22s ease-out both; }
+        @keyframes authPageOut { to { opacity: 0; } }
+        @keyframes authPageIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+        }
+
+        .register-card {
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            color: #1d4ed8;
+            font-size: 28px;
+        }
+
+        .brand p {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        h2 {
+            margin-bottom: 22px;
+            color: #111827;
+            font-size: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            color: #374151;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    37,
+                    99,
+                    235,
+                    0.1
+                );
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #93c5fd;
+            cursor: not-allowed;
+        }
+
+        #message {
+            margin-top: 18px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            min-height: 20px;
+        }
+
+        .login-link {
+            margin-top: 20px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            color: #6b7280;
+        }
+
+        .login-link a {
+            color: #2563eb;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+    </style>
+    <link rel="stylesheet" href="./css/citizen-register.css?v=20260907-verification-upload">
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <div class="register-card">
+
+        <aside class="register-intro-panel">
+
+            <div class="register-intro-content">
+
+                <div class="register-panel-brand">
+
+                    <div class="register-intro-mark">BT</div>
+
+                    <div>
+                        <h1>Barangay Tracker</h1>
+                        <span>COMMUNITY MANAGEMENT SYSTEM</span>
+                    </div>
+
+                </div>
+
+                <h2>
+                    Building a better <span>community</span> together.
+                </h2>
+
+                <p>
+                    Barangay Tracker connects citizens, barangays, and local
+                    government offices in one organized system for transparent
+                    projects, services, feedback, and monitoring.
+                </p>
+
+                <div class="register-features">
+                    <div class="register-feature"><b>01</b><div><strong>Project Monitoring</strong><small>View official project updates and spending.</small></div></div>
+                    <div class="register-feature"><b>02</b><div><strong>Citizen Services</strong><small>Access information for your barangay.</small></div></div>
+                    <div class="register-feature"><b>03</b><div><strong>Community Feedback</strong><small>Share feedback on community projects.</small></div></div>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <div class="brand">
+            <div class="brand-mark">BT</div>
+            <div><h1>Barangay Tracker</h1><p>Citizen Registration</p></div>
+
+        </div>
+
+
+        <div class="form-intro"><span>COMMUNITY ACCESS</span><h2>Create Citizen Account</h2><p>Register your details to access barangay project information.</p></div>
+
+        <div class="approval-note"><strong>Approval required</strong><span>Your Barangay will review your registration before you can sign in.</span></div>
+
+
+        <form id="registerForm">
+
+            <!-- FIRST NAME -->
+
+            <div class="form-group">
+
+                <label for="firstName">
+                    First Name
+                </label>
+
+                <input
+                    type="text"
+                    id="firstName"
+                    placeholder="Enter your first name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- SURNAME -->
+
+            <div class="form-group">
+
+                <label for="surname">
+                    Surname
+                </label>
+
+                <input
+                    type="text"
+                    id="surname"
+                    placeholder="Enter your surname"
+                    required
+                >
+
+            </div>
+
+
+            <!-- BARANGAY -->
+
+            <div class="form-group">
+
+                <label for="barangayId">
+                    Barangay
+                </label>
+
+                <select
+                    id="barangayId"
+                    required
+                >
+
+                    <option value="">
+                        Select your barangay
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create a password"
+                    required
+                    minlength="6"
+                >
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm your password"
+                    required
+                    minlength="6"
+                >
+
+            </div>
+
+            <div class="form-group verification-upload">
+                <label for="barangayProof">Barangay Proof / Valid ID</label>
+                <input type="file" id="barangayProof" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
+                <small>Example: Barangay Indigency, Residency Certificate, PhilID, passport, driver's license, or another government-issued ID. PDF/JPG/PNG, max 10 MB.</small>
+            </div>
+
+
+            <button
+                type="submit"
+                id="registerButton"
+            >
+                Submit Registration
+            </button>
+
+        </form>
+
+
+        <p id="message"></p>
+
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="login.html" id="loginLink">
+                Login
+            </a>
+
+        </div>
+
+
+        <div class="footer">
+
+            Barangay Tracker © 2026
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script
+    type="module"
+    src="./js/citizen-register.js?v=20260907-verification-upload"
+></script>
+
+</body>
+</html>

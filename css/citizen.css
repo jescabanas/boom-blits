@@ -1,0 +1,417 @@
+@import url("./dashboard.css?v=20260903-compact-nav-no-flash");
+
+body, button, input, select, textarea, .stat-value.small, .panel-header h2, .project-card h3, .feedback-section h3 {
+    font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+}
+
+/* Citizen dashboard uses the same trusted Barangay Tracker design system. */
+.sidebar { z-index: 2; }
+.main-content { max-width: none; }
+.projects-panel { margin-bottom: 20px; }
+.citizen-stat-card { min-height: 155px; position: relative; overflow: hidden; }
+.citizen-stat-card::before { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #2563eb, #93c5fd); content: ""; }
+.citizen-stat-card:nth-child(2)::before { background: linear-gradient(90deg, #15803d, #86efac); }
+.citizen-stat-card:nth-child(3)::before { background: linear-gradient(90deg, #c2410c, #fdba74); }
+.citizen-stat-card:nth-child(4)::before { background: linear-gradient(90deg, #7e22ce, #d8b4fe); }
+.stat-title { margin-bottom: 8px; color: var(--text-secondary); font-size: 10px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; }
+.stat-value { font-size: 25px; }.stat-value.small { font-family: Georgia,"Times New Roman",serif; font-size: 19px; font-weight: 600; }
+.panel-header { align-items: flex-start; padding-bottom: 18px; border-bottom: 1px solid var(--border); }.panel-header h2 { margin: 5px 0 4px; font-family: Georgia,"Times New Roman",serif; font-size: 20px; font-weight: 600; }.panel-header p { font-size: 11px; }
+#projectsList { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; padding-top: 18px; }
+.project-card { padding: 19px; border-color: var(--border); border-radius: 11px; box-shadow: 0 2px 8px rgba(15,23,42,.03); }.project-card:hover { border-color: #bfdbfe; box-shadow: 0 7px 18px rgba(15,23,42,.07); }
+.project-card h3 { font-family: Georgia,"Times New Roman",serif; font-size: 18px; font-weight: 600; }.project-description { margin-bottom: 15px; font-size: 11px; }.project-info { grid-template-columns: repeat(3,1fr); gap: 8px; }.project-info-item { padding: 10px; border: 1px solid #eef0f3; border-radius: 8px; }.project-info-item span { color: var(--text-light); font-size: 8px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; }.project-info-item strong { font-size: 10px; word-break: break-word; }.project-status { margin-top: 14px; padding: 6px 10px; font-size: 8px; letter-spacing: .6px; }.feedback-btn { margin-top: 14px; padding: 10px 13px; border: 1px solid var(--primary); border-radius: 8px; background: var(--primary); font-size: 10px; font-weight: 700; }.feedback-btn:hover { background: var(--primary-dark); }
+.details-panel { margin-top: 20px; }.close-btn { min-height: 35px; padding: 0 13px; border: 1px solid var(--border); border-radius: 7px; background: white; color: var(--text-secondary); font-size: 10px; font-weight: 700; cursor: pointer; }.details-grid { grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 20px; }.detail-item,.detail-description { border-color: #eef0f3; background: #f9fafb; }.detail-item { padding: 13px; }.detail-item span { color: var(--text-light); font-size: 8px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; }.detail-item strong { font-size: 12px; }.detail-description { padding: 15px; font-size: 12px; }.feedback-section { border-color: var(--border); }.feedback-section h3 { font-family: Georgia,"Times New Roman",serif; font-size: 19px; }.feedback-section > p { font-size: 11px; }.form-group label { color: var(--text-secondary); font-size: 10px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; }.form-group textarea { border-color: var(--border); font-size: 12px; }.form-group textarea:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(37,99,235,.11); }
+.loading,.empty { grid-column: 1 / -1; padding: 35px 20px; border: 1px dashed #d1d5db; border-radius: 9px; font-size: 12px; }#message { margin-top: 15px; font-size: 11px; }
+@media (max-width: 1100px) { #projectsList { grid-template-columns: 1fr; } }
+@media (max-width: 800px) { .project-info { grid-template-columns: 1fr; }.details-grid { grid-template-columns: 1fr; } }
+
+/* Citizen-specific emphasis while keeping supporting information restrained. */
+.stat-value.small { font-size: 21px; font-weight: 750; }
+.panel-header h2 { font-size: 22px; font-weight: 750; }
+.project-card h3 { font-size: 19px; font-weight: 750; }
+.project-info-item strong { font-size: 11px; font-weight: 750; }
+
+/* Accessible, high-contrast project details for senior citizen viewers. */
+.details-panel {
+    padding: 30px;
+    border: 2px solid #bfdbfe;
+    background: #ffffff;
+}
+.details-panel .panel-header h2 {
+    font-size: 27px;
+    color: #0f2d68;
+}
+.details-panel .panel-header p {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+.close-btn {
+    min-height: 44px;
+    padding: 0 18px;
+    border-color: #2563eb;
+    background: #eff6ff;
+    color: #12377d;
+    font-size: 13px;
+    font-weight: 800;
+}
+.details-grid {
+    gap: 14px;
+}
+.detail-item {
+    min-height: 96px;
+    padding: 18px;
+    border: 1px solid #bfdbfe;
+    background: #f8fbff;
+}
+.detail-item span {
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 11px;
+    letter-spacing: .7px;
+}
+.detail-item strong {
+    color: #0f172a;
+    font-size: 18px;
+    font-weight: 800;
+}
+.detail-description {
+    padding: 20px;
+    border: 1px solid #bfdbfe;
+    background: #f8fbff;
+    color: #1e293b;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.7;
+}
+.feedback-section {
+    padding-top: 28px;
+}
+.feedback-section h3 {
+    color: #0f2d68;
+    font-size: 23px;
+    font-weight: 800;
+}
+.feedback-section > p {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+.form-group label {
+    color: #1e3a5f;
+    font-size: 12px;
+}
+.form-group textarea {
+    width: 100%;
+    min-width: 100%;
+    min-height: 280px;
+    resize: vertical;
+    padding: 18px;
+    border: 2px solid #93c5fd;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.feedback-btn {
+    min-height: 46px;
+    padding: 0 20px;
+    font-size: 13px;
+}
+
+/* Full-width feedback area with clearer project summaries. */
+.feedback-section {
+    width: calc(100% + 60px);
+    margin: 28px -30px -30px;
+    padding: 28px 30px 30px;
+    border: 0;
+    border-top: 2px solid #bfdbfe;
+    border-radius: 0 0 9px 9px;
+    background: #eff6ff;
+}
+.feedback-section form { width: 100%; }
+.feedback-section .form-group { margin-top: 20px; }
+.feedback-section .feedback-btn { width: 100%; }
+
+#projectsList { gap: 18px; }
+.project-card { min-height: 260px; padding: 23px; border-color: #bfdbfe; background: #ffffff; }
+.citizen-stat-card, #projectsList .project-card, .details-panel { animation: cardReveal .4s ease-out both; }
+#projectsList .project-card:nth-child(2) { animation-delay: .05s; }
+#projectsList .project-card:nth-child(3) { animation-delay: .10s; }
+#projectsList .project-card:nth-child(4) { animation-delay: .15s; }
+#projectsList .project-card:hover { transform: translateY(-2px); }
+.citizen-stat-card { animation: cardReveal .42s ease-out both; }
+.citizen-stat-card:nth-child(2) { animation-delay: .06s; }
+.citizen-stat-card:nth-child(3) { animation-delay: .12s; }
+.citizen-stat-card:nth-child(4) { animation-delay: .18s; }
+.project-spending { grid-template-columns: 1fr; }
+.project-spending .project-info-item { position: relative; overflow: hidden; border-color: #bbf7d0; background: linear-gradient(110deg, #f0fdf4, #f7fee7); }
+.project-spending .project-info-item::after { position: absolute; top: 0; right: 0; width: 5px; height: 100%; background: #16a34a; content: ""; }
+.project-spending .project-info-item span { color: #166534; }
+.project-spending .project-info-item strong { color: #14532d; font-size: 17px; }
+.project-schedule { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 10px 12px; border: 1px solid #dbeafe; border-radius: 8px; background: #f8fbff; }
+.project-schedule span { color: #475569; font-size: 9px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; }
+.project-schedule strong { color: #12377d; font-size: 12px; font-weight: 800; }
+.project-card { animation: cardReveal .38s ease-out both; }
+.project-card h3 { margin-bottom: 10px; color: #0f2d68; font-size: 21px; }
+.project-description { color: #334155; font-size: 13px; font-weight: 500; line-height: 1.6; }
+.project-info { gap: 10px; }
+.project-info-item { min-height: 72px; padding: 13px; border-color: #dbeafe; background: #f8fbff; }
+.project-info-item span { margin-bottom: 7px; color: #475569; font-size: 9px; }
+.project-info-item strong { color: #0f172a; font-size: 13px; }
+.project-status { background: #dbeafe; color: #12377d; font-size: 10px; font-weight: 800; }
+.view-details-btn { min-height: 42px; padding: 0 17px; font-size: 12px; }
+
+@media (max-width: 600px) {
+    .feedback-section { width: calc(100% + 34px); margin: 24px -17px -22px; padding: 24px 17px 22px; }
+    .project-card { min-height: 0; padding: 20px; }
+    .project-card h3 { font-size: 19px; }
+    .project-info-item strong { font-size: 12px; }
+}
+
+@media (max-width: 600px) {
+    .details-panel { padding: 22px 17px; }
+    .details-panel .panel-header h2 { font-size: 23px; }
+    .detail-item strong { font-size: 17px; }
+}
+
+/* Citizen portal visual refresh: clearer information hierarchy and accessible contrast. */
+.main-content { background: linear-gradient(180deg, #f7faff 0, #f8fafc 340px); }
+.topbar { position: relative; margin-bottom: 26px; padding: 26px 28px; border: 1px solid #dbeafe; border-radius: 15px; background: linear-gradient(118deg, #ffffff 0%, #eff6ff 100%); box-shadow: 0 8px 25px rgba(30, 64, 175, .07); overflow: hidden; }
+.topbar::after { position: absolute; top: -70px; right: 110px; width: 220px; height: 220px; border: 34px solid rgba(96, 165, 250, .12); border-radius: 50%; content: ""; pointer-events: none; }
+.topbar > * { position: relative; z-index: 1; }
+.page-label { color: #1d4ed8; font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
+.topbar h1 { color: #102a5d; font-family: Georgia, "Times New Roman", serif; font-size: clamp(27px, 3vw, 36px); line-height: 1.15; }
+.topbar p { max-width: 560px; color: #475569; font-size: 13px; font-weight: 500; }
+.date-box { min-width: 82px; border-color: #bfdbfe; border-radius: 11px; background: #ffffff; box-shadow: 0 5px 14px rgba(30, 64, 175, .08); }
+
+.stats-grid { gap: 16px; margin-bottom: 26px; }
+.citizen-stat-card { min-height: 148px; padding: 22px; border: 1px solid #dbeafe; border-radius: 13px; background: #ffffff; box-shadow: 0 5px 16px rgba(15, 23, 42, .045); transition: transform .2s ease, box-shadow .2s ease; }
+.citizen-stat-card:hover { transform: translateY(-3px); box-shadow: 0 11px 22px rgba(30, 64, 175, .11); }
+.citizen-stat-card:nth-child(1) { background: linear-gradient(145deg, #ffffff, #f4f8ff); }
+.citizen-stat-card:nth-child(2) { background: linear-gradient(145deg, #ffffff, #f0fdf4); }
+.citizen-stat-card:nth-child(3) { background: linear-gradient(145deg, #ffffff, #fff7ed); }
+.citizen-stat-card:nth-child(4) { background: linear-gradient(145deg, #ffffff, #faf5ff); }
+.citizen-stat-card .stat-title { color: #334155; font-size: 10px; }
+.citizen-stat-card .stat-value { color: #102a5d; font-size: 30px; font-weight: 800; }
+.citizen-stat-card .stat-value.small { font-size: 21px; line-height: 1.35; }
+
+.projects-panel { padding: 27px; border: 1px solid #dbeafe; border-radius: 15px; background: #ffffff; box-shadow: 0 7px 20px rgba(15, 23, 42, .04); }
+.projects-panel .panel-header { position: relative; padding: 0 0 19px 17px; border-color: #dbeafe; }
+.projects-panel .panel-header::before { position: absolute; top: 1px; bottom: 20px; left: 0; width: 4px; border-radius: 4px; background: linear-gradient(#2563eb, #60a5fa); content: ""; }
+.projects-panel .panel-header h2 { color: #102a5d; font-size: 24px; }
+.projects-panel .panel-header p { color: #64748b; font-size: 12px; }
+.projects-panel .project-filters { display: flex; align-items: center; max-width: 650px; gap: 12px; margin: 20px 0 4px; padding: 12px; border: 1px solid #dbeafe; border-radius: 11px; background: #f8fbff; }
+.projects-panel .filter-field { display: flex; flex: 1; align-items: center; min-width: 0; gap: 10px; }
+.projects-panel .filter-field label { margin: 0; color: #1e3a5f; font-size: 10px; font-weight: 800; letter-spacing: .7px; white-space: nowrap; }
+.projects-panel .filter-field select { width: 100%; min-width: 0; min-height: 42px; border: 1px solid #bfdbfe; border-radius: 8px; background: #ffffff; color: #12377d; font-size: 12px; font-weight: 700; }
+
+#projectsList { gap: 18px; }
+#projectsList .project-card { position: relative; min-height: 0; padding: 24px; border: 1px solid #dbeafe; border-radius: 13px; box-shadow: 0 5px 16px rgba(15, 23, 42, .04); }
+#projectsList .project-card::before { position: absolute; top: 0; left: 0; width: 5px; height: 100%; border-radius: 13px 0 0 13px; background: #2563eb; content: ""; }
+#projectsList .project-card h3 { color: #102a5d; font-size: 22px; }
+.project-description { color: #334155; font-size: 14px; line-height: 1.65; }
+.project-info-item { border-color: #dbeafe; background: #f8fbff; }
+.project-info-item span { color: #475569; }
+.project-info-item strong { color: #0f2d68; font-size: 14px; }
+.project-schedule { border-color: #bfdbfe; background: #eff6ff; }
+.view-details-btn { min-height: 44px; border-radius: 8px; font-size: 12px; }
+
+@media (max-width: 700px) {
+    .topbar { padding: 22px 18px; }
+    .topbar::after { right: -85px; }
+    .projects-panel { padding: 21px 17px; }
+    .projects-panel .project-filters { flex-direction: column; align-items: stretch; }
+    .projects-panel .filter-field { width: 100%; }
+}
+
+/* Consistent formal blue-and-white Citizen theme. */
+body, button, input, select, textarea, .stat-value.small, .panel-header h2, .project-card h3, .feedback-section h3 {
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+.topbar h1, .panel-header h2, .project-card h3, .feedback-section h3 { font-family: "Segoe UI", Arial, sans-serif; color: #111827; }
+.page-label, .topbar p, .citizen-stat-card .stat-title, .projects-panel .panel-header p, .projects-panel .filter-field label, .project-description, .project-info-item span, .project-schedule span { color: #111827; }
+.topbar { background: linear-gradient(118deg, #ffffff 0%, #eff6ff 100%); }
+.citizen-stat-card:nth-child(1), .citizen-stat-card:nth-child(2), .citizen-stat-card:nth-child(3), .citizen-stat-card:nth-child(4) { background: linear-gradient(145deg, #ffffff, #eff6ff); }
+.citizen-stat-card::before { background: #2563eb; }
+.citizen-stat-card:nth-child(2)::before, .citizen-stat-card:nth-child(3)::before, .citizen-stat-card:nth-child(4)::before { background: #2563eb; }
+.citizen-stat-card .stat-value, .citizen-stat-card .stat-value.small, .project-info-item strong, .project-schedule strong { color: #111827; }
+.projects-panel .panel-header::before, #projectsList .project-card::before { background: #2563eb; }
+.project-spending .project-info-item { border-color: #bfdbfe; background: #eff6ff; }
+.project-spending .project-info-item::after { background: #2563eb; }
+.project-spending .project-info-item span, .project-spending .project-info-item strong { color: #111827; }
+.projects-panel .filter-field select { color: #111827; }
+.citizen-summary-page .projects-panel,
+.citizen-summary-page .details-panel { display: none; }
+
+/* Data-driven project overview for a clearer Citizen dashboard. */
+.project-overview {
+    margin: 0 0 26px;
+    padding: 25px 27px;
+    border: 1px solid #bfdbfe;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 7px 20px rgba(15, 23, 42, .04);
+}
+.overview-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 0 19px 17px;
+    border-bottom: 1px solid #dbeafe;
+    position: relative;
+}
+.overview-heading::before {
+    position: absolute;
+    top: 1px;
+    bottom: 20px;
+    left: 0;
+    width: 4px;
+    border-radius: 4px;
+    background: #2563eb;
+    content: "";
+}
+.overview-heading h2 { margin: 5px 0 4px; color: #111827; font-size: 23px; font-weight: 800; }
+.overview-heading p { margin: 0; color: #111827; font-size: 12px; }
+.overview-total {
+    min-width: 112px;
+    padding: 11px 13px;
+    border: 1px solid #bfdbfe;
+    border-radius: 9px;
+    background: #eff6ff;
+    text-align: right;
+}
+.overview-total span { display: block; color: #111827; font-size: 9px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+.overview-total strong { display: block; margin-top: 3px; color: #111827; font-size: 25px; font-weight: 800; }
+.project-status-chart { display: grid; gap: 17px; padding: 24px 2px 4px; }
+.chart-row { display: grid; grid-template-columns: 140px minmax(0, 1fr); align-items: center; gap: 14px; }
+.chart-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #111827; font-size: 12px; font-weight: 600; }
+.chart-label strong { min-width: 23px; color: #111827; font-size: 15px; font-weight: 800; text-align: right; }
+.chart-track { height: 22px; overflow: hidden; border: 1px solid #dbeafe; border-radius: 4px; background: #eff6ff; }
+.chart-bar { display: block; height: 100%; min-width: 0; border-radius: 3px; background: linear-gradient(90deg, #1d4ed8, #60a5fa); transition: width .45s ease; }
+.chart-loading { padding: 22px; border: 1px dashed #bfdbfe; border-radius: 8px; background: #f8fbff; color: #111827; font-size: 13px; text-align: center; }
+
+@media (max-width: 700px) {
+    .project-overview { padding: 21px 17px; }
+    .overview-heading { gap: 12px; }
+    .overview-total { min-width: 92px; padding: 9px 10px; }
+    .overview-total strong { font-size: 21px; }
+    .chart-row { grid-template-columns: 1fr; gap: 7px; }
+    .chart-track { height: 20px; }
+}
+
+/* Informative landing content for Citizen users after sign-in. */
+.citizen-welcome-card { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(285px, .88fr); gap: 28px; margin: 0 0 26px; padding: 29px; border: 1px solid #bfdbfe; border-radius: 15px; background: linear-gradient(125deg, #ffffff 0%, #eff6ff 100%); box-shadow: 0 8px 24px rgba(15, 23, 42, .05); }
+.welcome-main { position: relative; padding-left: 18px; }
+.welcome-main::before { position: absolute; top: 2px; bottom: 4px; left: 0; width: 4px; border-radius: 4px; background: #7dd3fc; content: ""; }
+.welcome-main h2 { margin: 6px 0 10px; color: #111827; font-size: 27px; font-weight: 800; line-height: 1.2; }
+.welcome-main p { max-width: 620px; margin: 0; color: #111827; font-size: 13px; line-height: 1.7; }
+.welcome-main p strong { color: #111827; font-weight: 800; }
+.welcome-projects-link { display: inline-flex; align-items: center; min-height: 43px; margin-top: 19px; padding: 0 17px; border: 1px solid #7dd3fc; border-radius: 8px; background: #7dd3fc; color: #111827; font-size: 12px; font-weight: 800; text-decoration: none; transition: background .18s ease, transform .18s ease; }
+.welcome-projects-link:hover { background: #38bdf8; transform: translateY(-1px); }
+.welcome-guide { display: grid; align-content: center; gap: 10px; }
+.guide-item { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 11px; padding: 12px; border: 1px solid #dbeafe; border-radius: 9px; background: #ffffff; }
+.guide-number { display: flex; width: 32px; height: 32px; align-items: center; justify-content: center; border-radius: 50%; background: #dbeafe; color: #111827; font-size: 10px; font-weight: 800; }
+.guide-item strong { display: block; color: #111827; font-size: 12px; font-weight: 800; }
+.guide-item p { margin: 3px 0 0; color: #111827; font-size: 11px; line-height: 1.45; }
+
+@media (max-width: 850px) { .citizen-welcome-card { grid-template-columns: 1fr; gap: 21px; } }
+@media (max-width: 600px) { .citizen-welcome-card { padding: 22px 17px; }.welcome-main h2 { font-size: 23px; } }
+
+/* Sky-blue and white visual treatment. */
+.topbar, .citizen-welcome-card { border-color: #bae6fd; background: linear-gradient(125deg, #ffffff 0%, #f0f9ff 100%); }
+.citizen-stat-card, .projects-panel, .project-overview { border-color: #bae6fd; }
+.citizen-stat-card:nth-child(1), .citizen-stat-card:nth-child(2), .citizen-stat-card:nth-child(3), .citizen-stat-card:nth-child(4) { background: linear-gradient(145deg, #ffffff, #f0f9ff); }
+.citizen-stat-card::before, .citizen-stat-card:nth-child(2)::before, .citizen-stat-card:nth-child(3)::before, .citizen-stat-card:nth-child(4)::before, .projects-panel .panel-header::before, #projectsList .project-card::before, .overview-heading::before { background: #0ea5e9; }
+.projects-panel .project-filters, .project-info-item, .project-schedule, .overview-total, .chart-track { border-color: #bae6fd; background: #f0f9ff; }
+.projects-panel .filter-field select, .guide-item { border-color: #bae6fd; }
+.guide-number { background: #e0f2fe; }
+.chart-bar { background: linear-gradient(90deg, #0284c7, #7dd3fc); }
+
+/* Clearer project summaries on the dedicated Projects page. */
+.citizen-projects-page #projectsList .project-card { padding-top: 27px; }
+.project-card-label { display: block; margin-bottom: 7px; color: #111827; font-size: 9px; font-weight: 800; letter-spacing: .85px; }
+.citizen-projects-page .project-status { display: inline-flex; align-items: center; min-height: 28px; margin-top: 16px; border: 1px solid #bae6fd; border-radius: 6px; background: #e0f2fe; color: #111827; font-size: 10px; font-weight: 800; }
+.citizen-projects-page .view-details-btn { width: 100%; margin-top: 17px; }
+.citizen-project-details-page .details-panel { display: block; max-width: 980px; min-height: 0; margin: 0 auto 25px; padding: 25px; border-width: 1px; }
+.citizen-project-details-page .details-panel .panel-header { align-items: flex-start; margin-bottom: 18px; padding-bottom: 16px; }
+.citizen-project-details-page .details-panel .panel-header h2 { margin: 5px 0 3px; font-size: 24px; font-weight: 750; }
+.citizen-project-details-page .details-panel .panel-header p { margin: 0; font-size: 12px; }
+.citizen-project-details-page #projectDetails { display: grid; gap: 14px; }
+.citizen-project-details-page .detail-description { padding: 17px 18px; border: 1px solid #bae6fd; border-radius: 10px; background: #ffffff; }
+.citizen-project-details-page .detail-label { display: block; margin-bottom: 7px; color: #111827; font-size: 10px; font-weight: 700; letter-spacing: .65px; text-transform: uppercase; }
+.citizen-project-details-page .detail-description p { margin: 0; color: #111827; font-size: 14px; font-weight: 400; line-height: 1.65; }
+.citizen-project-details-page .details-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
+.citizen-project-details-page .detail-item { min-height: 88px; padding: 14px 15px; border: 1px solid #bae6fd; border-radius: 9px; background: #f0f9ff; }
+.citizen-project-details-page .detail-item span { display: block; margin-bottom: 7px; color: #111827; font-size: 9px; font-weight: 700; letter-spacing: .6px; }
+.citizen-project-details-page .detail-item strong { display: block; color: #111827; font-size: 14px; font-weight: 500; line-height: 1.4; }
+.citizen-project-details-page .detail-item .detail-status-value { font-weight: 700; }
+.citizen-project-details-page .feedback-section { width: 100%; margin: 22px 0 0; padding: 20px 0 0; border: 0; border-top: 1px solid #bae6fd; border-radius: 0; background: transparent; }
+.citizen-project-details-page .feedback-section h3 { margin: 0 0 5px; font-size: 18px; font-weight: 700; }
+.citizen-project-details-page .feedback-section > p { margin: 0; font-size: 12px; }
+.citizen-project-details-page .feedback-section .form-group { margin-top: 14px; }
+.citizen-project-details-page .feedback-section .feedback-btn { width: auto; min-width: 180px; }
+
+.feedback-image-group input[type="file"] { min-height: 48px; padding: 7px; border: 1px dashed #93c5fd; border-radius: 8px; background: #fff; cursor: pointer; }
+.feedback-image-group input[type="file"]::file-selector-button { margin-right: 10px; padding: 8px 12px; border: 0; border-radius: 7px; background: #eff6ff; color: #1d4ed8; font-size: 11px; font-weight: 700; cursor: pointer; }
+.feedback-image-group small { display: block; margin-top: 6px; color: #64748b; font-size: 10px; }
+.feedback-image-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.feedback-image-item { position: relative; width: 88px; height: 78px; overflow: hidden; border: 1px solid #dbeafe; border-radius: 9px; background: #f8fafc; }
+.feedback-image-item img { width: 100%; height: 100%; object-fit: cover; }
+.feedback-image-remove { position: absolute; top: 4px; right: 4px; width: 23px; height: 23px; border: 0; border-radius: 50%; background: #fff; color: #b91c1c; font-size: 18px; line-height: 1; cursor: pointer; box-shadow: 0 1px 4px #0003; }
+.feedback-image-remove:hover { background: #fee2e2; }
+html.dark-mode .feedback-image-group input[type="file"] { background: #111827; color: #f9fafb; }
+html.dark-mode .feedback-image-group input[type="file"]::file-selector-button { background: #7dd3fc; color: #111827; }
+html.dark-mode .feedback-image-group small { color: #cbd5e1; }
+
+@media (max-width: 600px) {
+    .citizen-project-details-page .details-panel { padding: 20px 16px; }
+    .citizen-project-details-page .details-grid { grid-template-columns: 1fr; }
+    .citizen-project-details-page .detail-item { min-height: 78px; }
+    .citizen-project-details-page .feedback-section .feedback-btn { width: 100%; }
+}
+
+/* Match the vertical SYSTEM / 2026 card used by the DILG Dashboard. */
+.citizen-dashboard-page .topbar .date-box {
+    display: block;
+    min-width: 82px;
+    text-align: center;
+}
+
+.citizen-dashboard-page .topbar .date-box .date-label {
+    display: block;
+    margin: 0 0 3px;
+    letter-spacing: 1px;
+}
+
+.citizen-dashboard-page .topbar .date-box strong {
+    display: block;
+    margin: 0;
+}
+
+/* Citizen projects use a compact, barangay-scoped table with citizen-visible fields only. */
+.citizen-project-table-wrap { width: 100%; overflow-x: auto; border: 1px solid #dbeafe; border-radius: 11px; }
+#projectsList { display: block; padding-top: 18px; }
+.citizen-project-table { width: 100%; min-width: 900px; border-collapse: collapse; background: #fff; }
+.citizen-project-table th, .citizen-project-table td { padding: 13px 14px; border-bottom: 1px solid #e5e7eb; color: #111827; font-size: 12px; text-align: left; vertical-align: middle; }
+.citizen-project-table th { background: #f0f9ff; color: #0f172a; font-size: 10px; font-weight: 800; white-space: nowrap; }
+.citizen-project-table tbody tr:last-child td { border-bottom: 0; }
+.citizen-project-table tbody tr:hover { background: #f8fbff; }
+.citizen-project-title { min-width: 240px; }
+.citizen-project-title strong, .citizen-project-title span { display: block; }
+.citizen-project-title strong { color: #111827; font-size: 13px; }
+.citizen-project-title span { max-width: 330px; margin-top: 4px; color: #334155; line-height: 1.45; }
+.citizen-project-money { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.citizen-project-status { display: inline-block; padding: 6px 9px; border: 1px solid #bae6fd; border-radius: 7px; background: #eff6ff; color: #111827; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.citizen-project-schedule { min-width: 150px; }
+.citizen-project-schedule span, .citizen-project-schedule strong { display: block; }
+.citizen-project-schedule span { margin-bottom: 4px; color: #475569; font-size: 10px; }
+.citizen-project-schedule strong { color: #111827; font-size: 11px; }
+.citizen-project-table .view-details-btn { min-width: 78px; margin: 0; padding: 9px 12px; }
+html.dark-mode .citizen-project-table-wrap { border-color: #39556c; }
+html.dark-mode .citizen-project-table { background: #1a2a3a; }
+html.dark-mode .citizen-project-table th { border-color: #39556c; background: #203b50; color: #f8fafc; }
+html.dark-mode .citizen-project-table td { border-color: #39556c; color: #f8fafc; }
+html.dark-mode .citizen-project-table tbody tr:hover { background: #203b50; }
+html.dark-mode .citizen-project-title strong, html.dark-mode .citizen-project-title span, html.dark-mode .citizen-project-schedule span, html.dark-mode .citizen-project-schedule strong { color: #f8fafc; }
+html.dark-mode .citizen-project-status { border-color: #39556c; background: #203b50; color: #f8fafc; }

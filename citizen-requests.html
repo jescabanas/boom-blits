@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Citizen Requests - Barangay Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/dashboard.css?v=20260904-dashboard-depth"
+    >
+
+    <style>
+
+        .requests-container {
+            margin-top: 25px;
+        }
+
+        .request-card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 15px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .request-name {
+            font-size: 19px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .request-email {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .pending-badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .request-info {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .info-box {
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .approve-btn,
+        .reject-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .approve-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background: #15803d;
+        }
+
+        .reject-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background: #b91c1c;
+        }
+
+        .approve-btn:disabled,
+        .reject-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .empty-requests {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .page-description {
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+
+            .request-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .request-actions {
+                flex-direction: column;
+            }
+
+            .approve-btn,
+            .reject-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h2>
+                    Barangay
+                </h2>
+
+                <span>
+                    TRACKER
+                </span>
+
+            </div>
+
+
+            <nav>
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    id="dashboardBtn"
+                >
+                    Dashboard
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    id="projectsBtn"
+                >
+                    Projects
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item active"
+                    id="citizenRequestsBtn"
+                >
+                    Citizen Requests
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    id="addProjectBtn"
+                >
+                    Add Project
+                </button>
+
+            </nav>
+
+
+            <button
+                type="button"
+                class="logout-btn"
+                id="logoutBtn"
+            >
+                Logout
+            </button>
+
+        </aside>
+
+
+
+        <!-- MAIN -->
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+
+                    <h1 id="barangayTitle">
+                        Citizen Requests
+                    </h1>
+
+                    <p class="page-description">
+                        Review citizens requesting access to this barangay.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- MESSAGE -->
+
+            <p id="message"></p>
+
+
+
+            <!-- REQUESTS -->
+
+            <section class="requests-container">
+
+                <div id="requestsList">
+
+                    <div class="empty-requests">
+                        Loading citizen requests...
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <script
+        type="module"
+        src="./js/citizen-requests.js?v=20260902-citizen-approval-modal"
+    ></script>
+
+</body>
+
+</html>

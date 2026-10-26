@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Citizen Applications - Barangay Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/dashboard.css?v=20260904-dashboard-depth"
+    >
+    <style>
+        .citizen-verification-documents { margin: 14px 0; padding: 14px; border: 1px solid rgba(37,99,235,.22); border-radius: 10px; background: rgba(239,246,255,.65); }
+        .citizen-verification-documents > strong { display: block; margin-bottom: 9px; color: #111827; font-size: 12px; }
+        .citizen-verification-documents > div { display: flex; flex-wrap: wrap; gap: 8px; }
+        .citizen-document-file { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: #374151; font-size: 11px; }
+        .citizen-document-btn { padding: 9px 12px; border: 1px solid #2563eb; border-radius: 7px; background: #fff; color: #111827; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .citizen-document-missing { color: #b91c1c; font-size: 11px; }
+        html.dark-mode .citizen-verification-documents { background: rgba(30,41,59,.7); }
+        html.dark-mode .citizen-verification-documents > strong { color: #f8fafc; }
+        html.dark-mode .citizen-document-file { color: #e2e8f0; }
+        html.dark-mode .citizen-document-btn { background: #e2e8f0; color: #111827; }
+    </style>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>Barangay</h2>
+
+            <span>TRACKER</span>
+
+        </div>
+
+
+        <nav>
+
+            <button
+                class="nav-item"
+                id="dashboardBtn"
+                type="button"
+            >
+                Dashboard
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="projectsBtn"
+                type="button"
+            >
+                Projects
+            </button>
+
+
+            <button
+                class="nav-item active"
+                type="button"
+            >
+                Citizen Applications
+            </button>
+
+        </nav>
+
+
+        <button
+            class="logout-btn"
+            id="logoutBtn"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1 id="barangayTitle">
+                    Citizen Applications
+                </h1>
+
+                <p id="welcome">
+                    Loading...
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- MESSAGE -->
+
+        <p id="message"></p>
+
+
+        <!-- APPLICATIONS -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>
+                        Pending Confirmation
+                    </h2>
+
+                    <p>
+                        Review citizens requesting access
+                        to your Barangay.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="applicationList">
+
+                <div class="empty-projects">
+
+                    Loading applications...
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script
+    type="module"
+    src="./js/citizen-approvals.js?v=20260907-verification-documents"
+></script>
+
+</body>
+
+</html>

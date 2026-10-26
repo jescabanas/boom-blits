@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "boom-blits",
+    "boom-blits": "boom-blits"
+  },
+  "targets": {},
+  "etags": {}
+}

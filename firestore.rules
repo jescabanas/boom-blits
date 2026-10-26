@@ -1,0 +1,131 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function currentUser() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isDilg() {
+      return signedIn() && currentUser().role == "dilg";
+    }
+
+    function isBarangayStaff() {
+      return signedIn() && currentUser().role == "barangay";
+    }
+
+    function isApprovedCitizen() {
+      return signedIn()
+        && currentUser().role == "citizen"
+        && currentUser().status == "approved";
+    }
+
+    match /users/{userId} {
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == "citizen"
+        && request.resource.data.status == "pending";
+
+      allow read: if signedIn()
+        && (request.auth.uid == userId
+          || isDilg()
+          || (isBarangayStaff()
+            && resource.data.barangayId == currentUser().barangayId));
+
+      // A newly registered citizen may attach only their verification metadata.
+      allow update: if (signedIn()
+          && request.auth.uid == userId
+          && resource.data.role == "citizen"
+          && resource.data.status == "pending"
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(["verificationDocuments"]))
+        || isDilg()
+        || (isBarangayStaff()
+          && resource.data.role == "citizen"
+          && resource.data.barangayId == currentUser().barangayId
+          && request.resource.data.role == "citizen"
+          && request.resource.data.barangayId == currentUser().barangayId);
+
+      allow delete: if isDilg();
+    }
+
+    match /projects/{projectId} {
+      allow read: if isDilg()
+        || (isBarangayStaff()
+          && resource.data.barangayId == currentUser().barangayId)
+        || (isApprovedCitizen()
+          && resource.data.barangayId == currentUser().barangayId);
+
+      allow create: if (isDilg()
+          && request.resource.data.barangayId is string
+          && request.resource.data.barangayId.size() > 0
+          && request.resource.data.createdBy == request.auth.uid)
+        || (isBarangayStaff()
+          && request.resource.data.barangayId == currentUser().barangayId);
+
+      allow update: if isDilg()
+        || (isBarangayStaff()
+          && resource.data.barangayId == currentUser().barangayId
+          && request.resource.data.barangayId == currentUser().barangayId);
+
+      allow delete: if isDilg()
+        || (isBarangayStaff()
+          && resource.data.barangayId == currentUser().barangayId);
+    }
+
+    match /projectFeedback/{feedbackId} {
+      allow create: if isApprovedCitizen()
+        && request.resource.data.citizenUid == request.auth.uid
+        && request.resource.data.projectId is string
+        && request.resource.data.feedback is string
+        && request.resource.data.feedback.size() >= 5
+        && request.resource.data.barangayId == currentUser().barangayId
+        && get(/databases/$(database)/documents/projects/$(request.resource.data.projectId)).data.barangayId
+          == currentUser().barangayId;
+
+      allow read: if isDilg()
+        || (isBarangayStaff()
+          && resource.data.barangayId == currentUser().barangayId)
+        || (isApprovedCitizen()
+          && resource.data.citizenUid == request.auth.uid);
+
+      allow update, delete: if false;
+    }
+
+    match /citizenActivity/{activityId} {
+      allow create: if isApprovedCitizen()
+        && request.resource.data.citizenUid == request.auth.uid
+        && request.resource.data.barangayId == currentUser().barangayId;
+
+      allow read: if isDilg()
+        || (isBarangayStaff()
+          && resource.data.barangayId == currentUser().barangayId)
+        || (isApprovedCitizen()
+          && resource.data.citizenUid == request.auth.uid);
+
+      allow update, delete: if false;
+    }
+
+    match /citizenApplications/{applicationId} {
+      allow read, update: if isDilg()
+        || (isBarangayStaff()
+          && resource.data.barangayId == currentUser().barangayId);
+
+      allow create: if signedIn()
+        && applicationId == request.auth.uid
+        && request.resource.data.citizenUid == request.auth.uid
+        && request.resource.data.status == "pending"
+        && request.resource.data.barangayId == currentUser().barangayId;
+
+      allow delete: if isDilg();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

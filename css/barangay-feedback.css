@@ -1,0 +1,387 @@
+/* =====================================
+   SIDEBAR
+===================================== */
+
+.sidebar {
+
+    width: 255px;
+
+    min-height: 100vh;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 28px 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #122b68 0%,
+            #173b8f 50%,
+            #1d4ed8 100%
+        );
+
+    color: white;
+}
+
+.sidebar-top {
+    width: 100%;
+}
+
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        0 10px
+        28px;
+}
+
+.logo-mark {
+
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.13
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.logo h2 {
+
+    margin: 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 20px;
+
+    font-weight: 600;
+}
+
+.logo span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.65;
+}
+
+
+/* =====================================
+   NAVIGATION
+===================================== */
+
+.navigation {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.nav-label {
+
+    margin:
+        22px 12px 7px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.45
+        );
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.nav-item {
+
+    width: 100%;
+
+    min-height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding:
+        0 13px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.72
+        );
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        color 0.2s;
+}
+
+.nav-item:hover {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    color: white;
+}
+
+
+/* =====================================
+   ACTIVE BUTTON
+===================================== */
+
+.nav-item.active {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.14
+        );
+
+    color: white;
+
+    box-shadow:
+        inset 3px 0 0
+        #93c5fd;
+}
+
+
+/* =====================================
+   NAV ICON
+===================================== */
+
+.nav-icon {
+
+    width: 22px;
+
+    text-align: center;
+
+    font-size: 17px;
+
+    opacity: 0.9;
+}
+
+
+/* =====================================
+   SIDEBAR BOTTOM
+===================================== */
+
+.sidebar-bottom {
+
+    width: 100%;
+}
+
+.sidebar-divider {
+
+    height: 1px;
+
+    margin:
+        0 8px 12px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+.logout-btn {
+
+    width: 100%;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 0 13px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.7
+        );
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+
+    background:
+        rgba(
+            239,
+            68,
+            68,
+            0.15
+        );
+
+    color: #fecaca;
+}
+
+
+/* =====================================
+   RESPONSIVE SIDEBAR
+===================================== */
+
+@media (max-width: 800px) {
+
+    .sidebar {
+
+        width: 70px;
+
+        padding:
+            20px 10px;
+    }
+
+    .logo {
+
+        justify-content: center;
+
+        padding:
+            5px 0 25px;
+    }
+
+    .logo > div:last-child {
+
+        display: none;
+    }
+
+    .nav-label {
+
+        display: none;
+    }
+
+    .nav-item {
+
+        justify-content: center;
+
+        padding: 0;
+    }
+
+    .nav-item span:last-child {
+
+        display: none;
+    }
+
+    .logout-btn {
+
+        justify-content: center;
+
+        padding: 0;
+    }
+
+    .logout-btn span:last-child {
+
+        display: none;
+    }
+}
+
+.navigation a.nav-item {
+    text-decoration: none;
+}

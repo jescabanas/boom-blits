@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20261012-feedback-images">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Citizen Feedback - Barangay Tracker</title>
+
+    <!-- Gamitin ang same CSS ng Projects -->
+    <link
+        rel="stylesheet"
+        href="./css/projects.css?v=20261012-feedback-images"
+    >
+
+    <style>
+
+        /* =====================================
+           FEEDBACK LIST
+        ===================================== */
+
+        .feedback-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+
+        /* =====================================
+           FEEDBACK CARD
+        ===================================== */
+
+        .feedback-card {
+
+            background: white;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 2px 7px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.025
+                );
+        }
+
+
+        /* =====================================
+           FEEDBACK TOP
+        ===================================== */
+
+        .feedback-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 14px;
+        }
+
+
+        /* =====================================
+           PROJECT NAME
+        ===================================== */
+
+        .feedback-project {
+
+            margin: 0;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            color:
+                #111827;
+        }
+
+
+        /* =====================================
+           CITIZEN
+        ===================================== */
+
+        .feedback-citizen {
+
+            margin-top: 5px;
+
+            color:
+                #6b7280;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================
+           DATE
+        ===================================== */
+
+        .feedback-date {
+
+            color:
+                #6b7280;
+
+            font-size: 10px;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================
+           FEEDBACK CONTENT
+        ===================================== */
+
+        .feedback-content {
+
+            background:
+                #f9fafb;
+
+            border-radius: 8px;
+
+            padding: 15px;
+
+            color:
+                #374151;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .feedback-image-gallery { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+        .feedback-image-gallery .feedback-label { flex: 0 0 100%; margin-bottom: 0; }
+        .feedback-image-gallery a { display: block; width: 120px; height: 92px; overflow: hidden; border: 1px solid #dbeafe; border-radius: 8px; background: #f8fafc; }
+        .feedback-image-gallery img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .2s ease; }
+        .feedback-image-gallery a:hover img { transform: scale(1.05); }
+
+        /* =====================================
+           FEEDBACK LABEL
+        ===================================== */
+
+        .feedback-label {
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            color:
+                #1d4ed8;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 7px;
+        }
+
+
+        /* =====================================
+           FEEDBACK COUNT
+        ===================================== */
+
+        .feedback-count {
+
+            font-size: 25px;
+
+            font-weight: 700;
+
+            color:
+                #111827;
+        }
+
+
+        /* =====================================
+           EMPTY
+        ===================================== */
+
+        .empty-feedback {
+
+            padding:
+                45px 20px;
+
+            border:
+                1px dashed
+                #d1d5db;
+
+            border-radius: 9px;
+
+            color:
+                #6b7280;
+
+            text-align: center;
+        }
+
+
+        .empty-feedback h3 {
+
+            margin:
+                0 0 7px;
+
+            color:
+                #111827;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 17px;
+        }
+
+
+        .empty-feedback p {
+
+            margin: 0;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================
+           LOADING
+        ===================================== */
+
+        .loading {
+
+            padding: 30px;
+
+            text-align: center;
+
+            color:
+                #6b7280;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================
+           MESSAGE
+        ===================================== */
+
+        #message {
+
+            margin-top: 15px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 700px) {
+
+            .feedback-top {
+
+                flex-direction: column;
+            }
+
+            .feedback-date {
+
+                white-space: normal;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+    <!-- =====================================
+         SIDEBAR
+    ===================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+
+            <!-- =================================
+                 LOGO
+            ================================== -->
+
+            <div class="logo">
+
+                <div class="logo-mark">
+                    BT
+                </div>
+
+                <div>
+
+                    <h2>
+                        Barangay
+                    </h2>
+
+                    <span>
+                        TRACKER
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 NAVIGATION
+            ================================== -->
+
+            <nav class="navigation">
+
+                <div class="nav-label">
+                    MAIN MENU
+                </div>
+
+
+                <!-- DASHBOARD -->
+
+                <button
+                    class="nav-item"
+                    id="dashboardBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▦
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </button>
+
+
+                <!-- PROJECTS -->
+
+                <button
+                    class="nav-item"
+                    id="projectsBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Projects
+                    </span>
+
+                </button>
+
+
+                <!-- ADD PROJECT -->
+
+                <button
+                    class="nav-item"
+                    id="addProjectNav"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ＋
+                    </span>
+
+                    <span>
+                        Add Project
+                    </span>
+
+                </button>
+
+
+                <!-- CITIZEN FEEDBACK -->
+
+                <button
+                    class="nav-item active"
+                    id="feedbackBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Citizen Feedback
+                    </span>
+
+                </button>
+
+                <a
+                    class="nav-item"
+                    href="citizen-activity.html"
+                >
+
+                    <span class="nav-icon">◷</span>
+
+                    <span>Citizen Activity</span>
+
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- =================================
+             SIDEBAR BOTTOM
+        ================================== -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- LOGOUT -->
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ===================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================
+             TOPBAR
+        ================================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="page-label">
+                    CITIZEN SERVICES
+                </div>
+
+                <h1 id="barangayTitle">
+                    Citizen Feedback
+                </h1>
+
+                <p id="welcome">
+                    Loading...
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================
+             MESSAGE
+        ================================== -->
+
+        <p id="message"></p>
+
+
+
+        <!-- =================================
+             STAT
+        ================================== -->
+
+        <section class="project-info">
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    TOTAL FEEDBACK
+                </div>
+
+                <div
+                    class="feedback-count"
+                    id="totalFeedback"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             FEEDBACK PANEL
+        ================================== -->
+
+        <section class="panel">
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <div class="panel-label">
+                        CITIZEN SERVICES
+                    </div>
+
+                    <h2>
+                        Citizen Feedback
+                    </h2>
+
+                    <p>
+                        Feedback submitted by citizens
+                        from your barangay projects.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 FEEDBACK LIST
+            ================================== -->
+
+            <div
+                class="feedback-list"
+                id="feedbackList"
+            >
+
+                <div class="loading">
+
+                    Loading feedback...
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             FOOTER
+        ================================== -->
+
+        <footer class="dashboard-footer">
+
+            <span>
+                Barangay Tracker
+            </span>
+
+            <span>
+                Citizen Feedback System
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================
+     JAVASCRIPT
+===================================== -->
+
+<script
+    type="module"
+    src="./js/barangay-feedback.js?v=20261012-feedback-images"
+></script>
+
+
+</body>
+
+</html>

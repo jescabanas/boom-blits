@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Activity - Barangay Tracker</title>
+    <link rel="stylesheet" href="./css/citizen-activity.css?v=20260903-compact-nav-no-flash">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo"><div class="logo-mark">BT</div><div><h2>Barangay</h2><span>TRACKER</span></div></div>
+            <nav class="navigation">
+                <div class="nav-label">MAIN MENU</div>
+                <a class="nav-item" href="barangay.html"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
+                <a class="nav-item" href="projects.html"><span class="nav-icon">▣</span><span>Projects</span></a>
+                <a class="nav-item" href="add-project.html"><span class="nav-icon">＋</span><span>Add Project</span></a>
+                <a class="nav-item" href="barangay-feedback.html"><span class="nav-icon">☷</span><span>Citizen Feedback</span></a>
+                <button class="nav-item active" type="button"><span class="nav-icon">◷</span><span>Citizen Activity</span></button>
+            </nav>
+        </div>
+        <div class="sidebar-bottom"><button class="logout-btn" id="logoutBtn" type="button"><span class="nav-icon">↪</span><span>Logout</span></button></div>
+    </aside>
+    <main class="main-content">
+        <header class="topbar"><div><div class="page-label">COMMUNITY ACTIVITY</div><h1>Citizen Login Activity</h1><p id="barangayTitle">Recent citizen login records for this barangay.</p></div></header>
+        <section class="panel citizen-activity-panel">
+            <div class="panel-header activity-panel-header"><div><span class="panel-label">LOGIN RECORDS</span><h2>Recent Citizen Logins</h2><p>Shows the citizen name and the exact time of successful login.</p></div><div class="activity-count"><strong id="activityCount">0</strong><span>Records</span></div></div>
+            <div id="citizenActivityList" class="activity-list"><div class="activity-empty">Loading citizen activity...</div></div>
+        </section>
+        <p id="message"></p>
+    </main>
+</div>
+<script type="module" src="./js/citizen-activity.js?v=20260823-activity"></script>
+</body>
+</html>

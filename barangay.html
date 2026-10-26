@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Barangay Dashboard - Barangay Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/dashboard.css?v=20261021-barangay-title-size"
+    >
+
+</head>
+
+<body class="barangay-dashboard-page">
+
+<div class="layout">
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="logo">
+
+                <div class="logo-mark">
+                    BT
+                </div>
+
+                <div>
+                    <h2>Barangay</h2>
+                    <span>TRACKER</span>
+                </div>
+
+            </div>
+
+
+            <nav class="navigation">
+
+                <div class="nav-label">
+                    MAIN MENU
+                </div>
+
+
+                <button
+                    class="nav-item active"
+                    type="button"
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </button>
+
+
+                <button
+                    class="nav-item"
+                    id="projectsBtn"
+                    type="button"
+                >
+                    <span class="nav-icon">▣</span>
+                    <span>Projects</span>
+                </button>
+
+
+                <button
+                    class="nav-item"
+                    id="addProjectBtn"
+                    type="button"
+                >
+                    <span class="nav-icon">＋</span>
+                    <span>Add Project</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    id="feedbackBtn"
+                    type="button"
+                >
+                    <span class="nav-icon">☷</span>
+                    <span>Citizen Feedback</span>
+                </button>
+
+                <a
+                    class="nav-item"
+                    href="citizen-activity.html"
+                >
+                    <span class="nav-icon">◷</span>
+                    <span>Citizen Activity</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-divider"></div>
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button"
+            >
+
+                <span class="nav-icon">↪</span>
+
+                <span>Logout</span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================
+             TOPBAR
+        ================================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <div class="page-label">
+                    BARANGAY MANAGEMENT
+                </div>
+
+                <h1 id="barangayTitle">
+                    Barangay Dashboard
+                </h1>
+
+                <p id="welcome">
+                    Loading...
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="date-box">
+
+                    <span class="date-label">
+                        SYSTEM
+                    </span>
+
+                    <strong>
+                        2026
+                    </strong>
+
+                </div>
+
+                <div class="notification-wrapper">
+                    <button class="notification-btn" id="notificationBtn" type="button" aria-label="Notifications">🔔<span class="notification-dot" id="notificationDot"></span></button>
+                    <div class="notification-panel" id="notificationPanel" hidden><div class="notification-title">Notifications</div><div id="notificationList" class="notification-list">Loading notifications...</div></div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================
+             MESSAGE
+        ================================== -->
+
+        <p id="message"></p>
+
+
+        <!-- =================================
+             BARANGAY PORTAL OVERVIEW
+        ================================== -->
+
+        <section class="barangay-welcome-card" aria-labelledby="barangayWelcomeTitle">
+
+            <div class="barangay-welcome-intro">
+
+                <span class="barangay-welcome-eyebrow">
+                    BARANGAY MANAGEMENT CENTER
+                </span>
+
+                <h2 id="barangayWelcomeTitle">
+                    Manage your community projects in one place.
+                </h2>
+
+                <p>
+                    Use this portal to keep the official project records of
+                    <strong id="dashboardBarangayName">your barangay</strong>
+                    accurate, monitor spending, and respond to citizen requests.
+                </p>
+
+                <a class="barangay-welcome-action" href="add-project.html">
+                    Add a Project
+                </a>
+
+            </div>
+
+            <div class="barangay-guide" aria-label="Dashboard guide">
+
+                <div class="barangay-guide-item">
+                    <span>01</span>
+                    <div>
+                        <strong>Project records</strong>
+                        <p>Add, update, and review your submitted projects.</p>
+                    </div>
+                </div>
+
+                <div class="barangay-guide-item">
+                    <span>02</span>
+                    <div>
+                        <strong>Budget monitoring</strong>
+                        <p>Track total spending and remaining funds.</p>
+                    </div>
+                </div>
+
+                <div class="barangay-guide-item">
+                    <span>03</span>
+                    <div>
+                        <strong>Citizen access</strong>
+                        <p>Review registration requests from your community.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             OVERVIEW TITLE
+        ================================== -->
+
+        <section class="section-heading">
+
+            <div>
+
+                <span>
+                    OVERVIEW
+                </span>
+
+                <h2>
+                    Barangay Performance
+                </h2>
+
+            </div>
+
+            <p>
+                Monitor your barangay's projects,
+                budget, and financial utilization.
+            </p>
+
+        </section>
+
+
+        <!-- =================================
+             STAT CARDS
+        ================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- TOTAL PROJECTS -->
+
+            <div class="stat-card">
+
+                <div class="stat-card-top">
+
+                    <div class="stat-icon blue">
+                        ▣
+                    </div>
+
+                    <span class="stat-status">
+                        ACTIVE
+                    </span>
+
+                </div>
+
+
+                <div class="stat-title">
+                    Total Projects
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="totalProjects"
+                >
+                    0
+                </div>
+
+
+                <div class="stat-description">
+                    Registered barangay projects
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL BUDGET -->
+
+            <div class="stat-card">
+
+                <div class="stat-card-top">
+
+                    <div class="stat-icon green">
+                        ₱
+                    </div>
+
+                    <span class="stat-status">
+                        ALLOCATED
+                    </span>
+
+                </div>
+
+
+                <div class="stat-title">
+                    Total Budget
+                </div>
+
+
+                <div
+                    class="stat-value currency"
+                    id="totalBudget"
+                >
+                    ₱0
+                </div>
+
+
+                <div class="stat-description">
+                    Combined project allocation
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL SPENT -->
+
+            <div class="stat-card">
+
+                <div class="stat-card-top">
+
+                    <div class="stat-icon orange">
+                        ↗
+                    </div>
+
+                    <span class="stat-status">
+                        UTILIZED
+                    </span>
+
+                </div>
+
+
+                <div class="stat-title">
+                    Total Spent
+                </div>
+
+
+                <div
+                    class="stat-value currency"
+                    id="totalSpent"
+                >
+                    ₱0
+                </div>
+
+
+                <div class="stat-description">
+                    Total project expenditure
+                </div>
+
+            </div>
+
+
+            <!-- REMAINING -->
+
+            <div class="stat-card">
+
+                <div class="stat-card-top">
+
+                    <div class="stat-icon purple">
+                        ◈
+                    </div>
+
+                    <span class="stat-status">
+                        AVAILABLE
+                    </span>
+
+                </div>
+
+
+                <div class="stat-title">
+                    Remaining Budget
+                </div>
+
+
+                <div
+                    class="stat-value currency"
+                    id="remainingBudget"
+                >
+                    ₱0
+                </div>
+
+
+                <div class="stat-description">
+                    Available project funds
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             TWO COLUMN AREA
+        ================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- BUDGET UTILIZATION -->
+
+            <div class="panel budget-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            FINANCIAL MONITORING
+                        </span>
+
+                        <h2>
+                            Budget Utilization
+                        </h2>
+
+                        <p>
+                            Overall project budget usage
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+                <div class="budget-pie-layout">
+                    <div class="budget-pie" id="budgetPieChart" style="--utilization: 0%;">
+                        <div class="budget-pie-center"><strong id="utilization">0%</strong><span>UTILIZED</span></div>
+                    </div>
+                    <div class="budget-breakdown">
+                        <div class="budget-breakdown-item"><span class="legend-dot blue-dot"></span><div><span>Spent Budget</span><strong id="spentBudgetChart">₱0</strong></div></div>
+                        <div class="budget-breakdown-item"><span class="legend-dot remaining-dot"></span><div><span>Remaining Budget</span><strong id="remainingBudgetChart">₱0</strong></div></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            SHORTCUTS
+                        </span>
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+
+                        <p>
+                            Frequently used management tools
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+
+                    <button
+                        class="quick-action primary-action"
+                        id="addProjectBtn2"
+                        type="button"
+                    >
+
+                        <span class="quick-icon">
+                            ＋
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                Add New Project
+                            </strong>
+
+                            <small>
+                                Create a barangay project
+                            </small>
+
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-action"
+                        id="viewProjectsBtn"
+                        type="button"
+                    >
+
+                        <span class="quick-icon">
+                            ▣
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                View Projects
+                            </strong>
+
+                            <small>
+                                Review existing projects
+                            </small>
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             CITIZEN CONFIRMATION
+        ================================== -->
+
+        <section
+            class="panel citizen-panel"
+            id="citizenConfirmationPanel"
+        >
+
+            <div class="panel-header citizen-header">
+
+                <div>
+
+                    <span class="panel-label">
+                        COMMUNITY ACCESS
+                    </span>
+
+                    <h2>
+                        Citizen Confirmation
+                    </h2>
+
+                    <p>
+                        Review citizens requesting
+                        access to your barangay.
+                    </p>
+
+                </div>
+
+
+                <div class="pending-summary">
+
+                    <strong id="pendingCitizenCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Pending
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div id="citizenList">
+
+                <div class="empty-projects">
+
+                    Loading citizen requests...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             FOOTER
+        ================================== -->
+
+        <footer class="dashboard-footer">
+
+            <span>
+                Barangay Tracker
+            </span>
+
+            <span>
+                Community Management System
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+<!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+<script
+    type="module"
+    src="./js/barangay.js?v=20260907-citizen-proof-actions"
+></script>
+
+
+</body>
+
+</html>

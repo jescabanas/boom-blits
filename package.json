@@ -1,0 +1,19 @@
+{
+  "name": "barangaytracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
+    "firebase": "^12.19.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "supabase": "^2.120.0"
+  }
+}

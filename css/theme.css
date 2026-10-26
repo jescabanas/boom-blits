@@ -1,0 +1,300 @@
+@import url("./dark-mode.css?v=20260904-light-numbers-black");
+
+/* Barangay Tracker shared visual theme: sky blue, white, and readable dark text. */
+:root {
+    --primary: #7dd3fc !important;
+    --primary-dark: #7dd3fc !important;
+    --primary-light: #ffffff !important;
+    --text: #111827 !important;
+    --text-secondary: #111827 !important;
+    --text-light: #111827 !important;
+    --border: #7dd3fc !important;
+    --background: #ffffff !important;
+    --white: #ffffff !important;
+    --green: #0284c7 !important;
+    --orange: #0284c7 !important;
+    --purple: #0284c7 !important;
+}
+
+body { background: #ffffff !important; color: #111827 !important; }
+html, body, button, input, select, textarea, h1, h2, h3, h4, p, label, .sidebar, .main-content, .panel, .stat-card, .project-card, .nav-item, .logout-btn, .quick-action, .detail-item, .form-group, .feedback-section, .activity-item, .notification-panel, *::before, *::after { font-family: "Segoe UI", Arial, sans-serif !important; }
+h1, h2, h3, h4, p, label, strong, span { color: #111827; }
+
+.sidebar, .sidebar-top, .sidebar-bottom, .navigation, .auth-sidebar, .login-sidebar, .brand-panel { background: #7dd3fc !important; }
+.sidebar { border-right-color: #bae6fd !important; }
+.sidebar-bottom { border-top-color: #bae6fd !important; }
+.sidebar .logo-mark { background: #7dd3fc !important; color: #111827 !important; }
+.sidebar .nav-item, .sidebar .logout-btn { border-color: transparent !important; background: transparent !important; color: #111827 !important; }
+.sidebar .nav-item, .sidebar .logout-btn { display: flex !important; width: 100% !important; min-height: 40px !important; height: 40px !important; align-items: center !important; gap: 10px !important; padding: 0 12px !important; border-radius: 8px !important; font-size: 12px !important; font-weight: 500 !important; line-height: 1 !important; transform: none !important; }
+.sidebar .nav-item:hover, .sidebar .nav-item.active, .sidebar .logout-btn:hover { min-height: 40px !important; height: 40px !important; padding: 0 12px !important; transform: none !important; box-shadow: none !important; }
+.sidebar .nav-icon { display: inline-flex !important; width: 18px !important; height: 18px !important; flex: 0 0 18px !important; align-items: center !important; justify-content: center !important; font-size: 14px !important; }
+.sidebar .logo h2, .sidebar .logo span, .sidebar .nav-label, .sidebar .nav-item, .sidebar .logout-btn, .sidebar .nav-icon { color: #111827 !important; }
+.sidebar .nav-item.active, .sidebar .nav-item:hover { background: #ffffff !important; color: #111827 !important; }
+.sidebar .nav-item.active .nav-icon, .sidebar .nav-item:hover .nav-icon { color: #111827 !important; }
+
+/* Professional depth for the sky-blue navigation rail. */
+.sidebar {
+    background-color: #7dd3fc !important;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+        radial-gradient(circle at 20% 92%, rgba(3, 105, 161, 0.16), transparent 34%),
+        linear-gradient(180deg, #8edcff 0%, #7dd3fc 48%, #67c7ef 100%) !important;
+    background-size: 28px 28px, 28px 28px, auto, auto !important;
+    box-shadow:
+        inset -1px 0 0 rgba(255, 255, 255, 0.62),
+        5px 0 22px rgba(3, 105, 161, 0.10) !important;
+}
+
+.sidebar .sidebar-top,
+.sidebar .sidebar-bottom,
+.sidebar .navigation {
+    background: transparent !important;
+}
+
+.sidebar .logo {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+
+.sidebar .sidebar-divider {
+    height: 1px;
+    border: 0 !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent) !important;
+}
+
+.sidebar .nav-item.active {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.85),
+        0 6px 16px rgba(3, 105, 161, 0.13) !important;
+}
+
+/* Shared compact sidebar on Projects, Add Project, and Feedback pages. */
+.sidebar { z-index: 100 !important; }
+.sidebar .navigation .sidebar-toggle { position: static !important; display: flex !important; width: 100% !important; min-height: 40px !important; height: 40px !important; align-items: center !important; justify-content: center !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 8px !important; background: transparent !important; color: #111827 !important; font-size: 15px !important; cursor: pointer; transition: transform .28s ease, background .2s ease !important; }
+.sidebar .navigation .sidebar-toggle:hover { background: #ffffff !important; transform: none !important; }
+.sidebar .nav-icon { display: inline-flex !important; width: 18px !important; height: 18px !important; flex: 0 0 18px !important; align-items: center !important; justify-content: center !important; font-size: 14px !important; line-height: 1 !important; text-align: center !important; }
+.sidebar .nav-item, .sidebar .logout-btn { width: 184px !important; max-width: 100% !important; margin-right: auto !important; margin-left: auto !important; }
+.sidebar .navigation .sidebar-toggle { width: 184px !important; max-width: 100% !important; margin-right: auto !important; margin-left: auto !important; }
+
+/* One dashboard shell for every Barangay page. */
+@media (min-width: 1001px) {
+    .sidebar { width: 220px !important; padding: 28px 18px !important; }
+    .sidebar .logo { margin-bottom: 30px; padding: 0 10px 28px !important; }
+    .sidebar .navigation { gap: 4px; }
+    .sidebar .nav-label { margin: 0 0 10px 12px !important; font-size: 9px !important; }
+}
+
+.topbar, .page-header { border-color: #7dd3fc !important; background: #ffffff !important; box-shadow: none !important; }
+.form-container, .content-card, .project-overview { border-color: #7dd3fc !important; border-radius: 12px !important; box-shadow: none !important; }
+@media (min-width: 1001px) { body.sidebar-collapsed .sidebar { width: 76px !important; } body.sidebar-collapsed .main-content { width: calc(100% - 76px) !important; margin-left: 76px !important; } body.sidebar-collapsed .sidebar .logo > :not(.logo-mark), body.sidebar-collapsed .sidebar .nav-label, body.sidebar-collapsed .sidebar .nav-item > span:last-child, body.sidebar-collapsed .sidebar .logout-btn > span:last-child, body.sidebar-collapsed .sidebar .sidebar-divider { display: none !important; } body.sidebar-collapsed .sidebar .nav-item, body.sidebar-collapsed .sidebar .logout-btn { justify-content: center !important; padding-right: 0 !important; padding-left: 0 !important; } body.sidebar-collapsed .sidebar .navigation .sidebar-toggle, body.sidebar-collapsed .sidebar .navigation .sidebar-toggle:hover { transform: rotate(180deg) !important; } }
+@media (min-width: 1001px) { html.sidebar-collapsed .sidebar { width: 76px !important; } html.sidebar-collapsed .main-content { width: calc(100% - 76px) !important; margin-left: 76px !important; } html.sidebar-collapsed .sidebar .logo > :not(.logo-mark), html.sidebar-collapsed .sidebar .nav-label, html.sidebar-collapsed .sidebar .nav-item > span:last-child, html.sidebar-collapsed .sidebar .logout-btn > span:last-child, html.sidebar-collapsed .sidebar .sidebar-divider { display: none !important; } html.sidebar-collapsed .sidebar .nav-item, html.sidebar-collapsed .sidebar .logout-btn { width: 40px !important; min-width: 40px !important; justify-content: center !important; margin-right: auto !important; margin-left: auto !important; padding-right: 0 !important; padding-left: 0 !important; } html.sidebar-collapsed .sidebar .navigation .sidebar-toggle, html.sidebar-collapsed .sidebar .navigation .sidebar-toggle:hover { width: 40px !important; transform: rotate(180deg) !important; } }
+
+.topbar, .panel, .stat-card, .project-card, .project-overview, .citizen-welcome-card, .details-panel, .form-card, .content-card, .document-row, .activity-item { border-color: #7dd3fc !important; background: #ffffff !important; }
+.main-content { background: #ffffff !important; }
+.panel-label, .page-label { color: #111827 !important; }
+
+button, .feedback-btn, .view-details-btn, .welcome-projects-link, .primary-btn, .submit-btn, .save-btn { border-color: #7dd3fc !important; background: #7dd3fc !important; color: #111827 !important; }
+button:hover, .feedback-btn:hover, .view-details-btn:hover, .welcome-projects-link:hover, .primary-btn:hover, .submit-btn:hover, .save-btn:hover { background: #38bdf8 !important; }
+.close-btn, .secondary-btn, .cancel-btn { border-color: #7dd3fc !important; background: #ffffff !important; color: #111827 !important; }
+
+input, select, textarea, .filter-field select { border-color: #7dd3fc !important; background: #ffffff !important; color: #111827 !important; }
+input:focus, select:focus, textarea:focus { border-color: #7dd3fc !important; box-shadow: none !important; }
+.project-status, .status-badge, .status, .badge { border-color: #7dd3fc !important; background: #ffffff !important; color: #111827 !important; }
+.notification-btn, .chart-bar, .logo-mark { background: #7dd3fc !important; color: #111827 !important; }
+.notification-panel, .notification-item, .project-filters, .project-info-item, .project-schedule, .chart-track, .budget-breakdown-item { border-color: #7dd3fc !important; background: #ffffff !important; }
+.budget-pie { background: conic-gradient(#7dd3fc 0 var(--utilization), #ffffff var(--utilization) 100%) !important; }
+.budget-pie::after, .remaining-dot { border-color: #7dd3fc !important; background: #ffffff !important; }
+
+/* Modern office backdrop: replaces only the plain page canvas. */
+html {
+    min-height: 100%;
+    background: #dbe6ec url("../assets/modern-office-background.jpg") center / cover fixed no-repeat;
+}
+
+body {
+    min-height: 100vh;
+    background: rgba(241, 247, 250, 0.34) !important;
+    background-image:
+        radial-gradient(circle at 88% 8%, rgba(56, 189, 248, 0.18), transparent 28%),
+        radial-gradient(circle at 12% 92%, rgba(14, 165, 233, 0.11), transparent 26%) !important;
+    background-attachment: fixed !important;
+}
+
+.main-content {
+    background: rgba(248, 251, 253, 0.50) !important;
+    -webkit-backdrop-filter: blur(7px) saturate(112%);
+    backdrop-filter: blur(7px) saturate(112%);
+}
+
+html.dark-mode {
+    background-color: #07111d !important;
+    background-image:
+        radial-gradient(circle at 85% 10%, rgba(56, 189, 248, 0.13), transparent 34%),
+        radial-gradient(circle at 15% 90%, rgba(14, 165, 233, 0.09), transparent 32%),
+        linear-gradient(rgba(125, 211, 252, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125, 211, 252, 0.025) 1px, transparent 1px),
+        linear-gradient(135deg, #07111d 0%, #0b1d2c 52%, #10263a 100%) !important;
+    background-size: auto, auto, 36px 36px, 36px 36px, auto !important;
+    background-attachment: fixed !important;
+}
+
+html.dark-mode body {
+    background: transparent !important;
+    background-image: none !important;
+}
+
+html.dark-mode .main-content {
+    background: rgba(7, 17, 29, 0.18) !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* Quiet glass highlights and depth without changing the content colors. */
+html body .topbar,
+html body .page-header,
+html body .panel,
+html body .form-card,
+html body .content-card,
+html body .project-card,
+html body .stat-card {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 8px 24px rgba(15, 23, 42, 0.07) !important;
+}
+
+html.dark-mode body .topbar,
+html.dark-mode body .page-header,
+html.dark-mode body .panel,
+html.dark-mode body .form-card,
+html.dark-mode body .content-card,
+html.dark-mode body .project-card,
+html.dark-mode body .stat-card {
+    box-shadow:
+        inset 0 1px 0 rgba(125, 211, 252, 0.13),
+        0 10px 28px rgba(0, 0, 0, 0.22) !important;
+}
+
+html body .project-card,
+html body .stat-card,
+html body .content-card {
+    transition: transform 180ms ease, box-shadow 180ms ease !important;
+}
+
+html body .project-card:hover,
+html body .stat-card:hover,
+html body .content-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 12px 30px rgba(15, 23, 42, 0.12) !important;
+}
+
+html.dark-mode body .project-card:hover,
+html.dark-mode body .stat-card:hover,
+html.dark-mode body .content-card:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(125, 211, 252, 0.17),
+        0 14px 32px rgba(0, 0, 0, 0.30) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html body .project-card,
+    html body .stat-card,
+    html body .content-card {
+        transition: none !important;
+    }
+
+    html body .project-card:hover,
+    html body .stat-card:hover,
+    html body .content-card:hover {
+        transform: none;
+    }
+}
+
+/* Active navigation marker. */
+.sidebar .nav-item {
+    position: relative;
+}
+
+.sidebar .nav-item.active::before {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: -7px;
+    width: 3px;
+    border-radius: 999px;
+    background: #075985;
+    box-shadow: 0 0 9px rgba(7, 89, 133, 0.28);
+    content: "";
+}
+
+html.dark-mode .sidebar .nav-item.active::before {
+    background: #e0f2fe;
+    box-shadow: 0 0 10px rgba(224, 242, 254, 0.38);
+}
+
+/* Status dots add meaning without increasing badge size. */
+.status::before,
+.verification-badge::before,
+.status-badge::before {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: 1px;
+    content: "";
+}
+
+/* Smooth data-bar reveal. */
+.progress-bar,
+.physical-progress-bar,
+.chart-bar {
+    transform-origin: left center;
+    animation: dashboardBarReveal 520ms ease-out both;
+}
+
+@keyframes dashboardBarReveal {
+    from { transform: scaleX(0); opacity: 0.55; }
+    to { transform: scaleX(1); opacity: 1; }
+}
+
+/* Loading feedback for asynchronous action buttons. */
+.save-btn:disabled::before,
+.submit-btn:disabled::before,
+.delete-btn:disabled::before,
+.feedback-btn:disabled::before,
+.register-button:disabled::before,
+.signup-submit:disabled::before {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 7px;
+    border: 2px solid rgba(17, 24, 39, 0.28);
+    border-top-color: #111827;
+    border-radius: 50%;
+    vertical-align: -2px;
+    animation: dashboardButtonSpin 650ms linear infinite;
+    content: "";
+}
+
+@keyframes dashboardButtonSpin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-bar,
+    .physical-progress-bar,
+    .chart-bar,
+    .save-btn:disabled::before,
+    .submit-btn:disabled::before,
+    .delete-btn:disabled::before,
+    .feedback-btn:disabled::before,
+    .register-button:disabled::before,
+    .signup-submit:disabled::before {
+        animation: none;
+    }
+}

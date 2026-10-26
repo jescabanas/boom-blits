@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20261021-restore-dilg-nav">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DILG Dashboard - Barangay Tracker</title>
+    <link rel="stylesheet" href="./css/dilg-dashboard.css?v=20261021-restore-dilg-nav">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="logo">
+                    <div class="logo-mark">BT</div>
+                    <div>
+                        <h2>Barangay</h2>
+                        <span>TRACKER</span>
+                    </div>
+                </div>
+                <nav class="navigation" aria-label="Main navigation">
+                    <div class="nav-label">DILG ADMIN</div>
+                    <button class="nav-item active" id="dashboardBtn" type="button">
+                        <span class="nav-icon">⌂</span><span>Dashboard</span>
+                    </button>
+                    <button class="nav-item" id="barangaysBtn" type="button">
+                        <span class="nav-icon">▦</span><span>Barangays</span>
+                    </button>
+                    <button class="nav-item" id="projectsBtn" type="button">
+                        <span class="nav-icon">▣</span><span>Projects</span>
+                    </button>
+                    <a class="nav-item" href="dilg-projects.html?validation=true">
+                        <span class="nav-icon">✓</span><span>Project Validation</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-divider"></div>
+                <button class="logout-btn" id="logoutBtn" type="button">
+                    <span class="nav-icon">↪</span><span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="page-label">DILG MANAGEMENT</div>
+                    <h1>DILG Dashboard</h1>
+                    <p id="adminName">Welcome, DILG Admin</p>
+                </div>
+                <div class="topbar-right">
+                    <div class="date-box"><span class="date-label">SYSTEM</span><strong>2026</strong></div>
+                    <div class="notification-wrapper"><button class="notification-btn" id="notificationBtn" type="button" aria-label="Notifications">🔔<span class="notification-dot" id="notificationDot"></span></button><div class="notification-panel" id="notificationPanel" hidden><div class="notification-title">Notifications</div><div id="notificationList" class="notification-list">Loading notifications...</div></div></div>
+                </div>
+            </header>
+
+            <p id="message"></p>
+
+            <section class="section-heading">
+                <div><span>OVERVIEW</span><h2>Province-wide Performance</h2></div>
+                <p>Monitor project budgets, utilization, and submitted barangay projects.</p>
+            </section>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-top"><div class="stat-icon blue">▣</div><span class="stat-status">TRACKED</span></div>
+                    <div class="stat-title">Total Projects</div>
+                    <div class="stat-value" id="totalProjects">0</div>
+                    <div class="stat-description">Projects across all barangays</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-top"><div class="stat-icon green">₱</div><span class="stat-status">ALLOCATED</span></div>
+                    <div class="stat-title">Total Budget</div>
+                    <div class="stat-value currency" id="totalBudget">₱0.00</div>
+                    <div class="stat-description">Combined project allocation</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-top"><div class="stat-icon orange">✓</div><span class="stat-status">REVIEWED</span></div>
+                    <div class="stat-title">Validated Projects</div>
+                    <div class="stat-value" id="verifiedProjects">0</div>
+                    <div class="stat-description">Project updates validated by DILG</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-top"><div class="stat-icon purple">◷</div><span class="stat-status">ACTION NEEDED</span></div>
+                    <div class="stat-title">For Validation</div>
+                    <div class="stat-value" id="pendingProjects">0</div>
+                    <div class="stat-description">Submitted updates awaiting DILG review</div>
+                </div>
+            </section>
+
+            <section class="dilg-budget-pie-panel" aria-labelledby="dilgBudgetPieTitle">
+                <div class="dilg-pie-heading"><div><span>FINANCIAL SNAPSHOT</span><h2 id="dilgBudgetPieTitle">Utilization and Balance</h2><p>Budget utilization updates automatically as project spending is recorded.</p></div></div>
+                <div class="dilg-pie-layout">
+                    <div class="dilg-budget-pie" id="budgetSummaryPie" style="--spent-percent:0%;"><div><strong id="spentPercentPie">0%</strong><span>UTILIZATION</span></div></div>
+                    <div class="dilg-pie-legend">
+                        <div><span class="pie-key spent-key"></span><p>Utilized Budget<strong id="spentPieAmount">₱0.00</strong><small id="spentPiePercent">0% of total budget</small></p></div>
+                        <div><span class="pie-key remaining-key"></span><p>Balance<strong id="remainingPieAmount">₱0.00</strong><small id="remainingPiePercent">100% available</small></p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-grid">
+                <section class="panel budget-panel">
+                    <div class="panel-header">
+                        <div><span class="panel-label">FINANCIAL MONITORING</span><h2>Overall Budget Utilization</h2><p>Total spending compared to allocated project budgets.</p></div>
+                        <div class="utilization-value"><strong id="budgetUtilization">0.00%</strong><span>UTILIZED</span></div>
+                    </div>
+                    <div class="progress-container"><div id="overallProgressBar" class="progress-bar"></div></div>
+                    <div class="budget-legend"><div><span class="legend-dot blue-dot"></span><span>Utilized Budget</span></div><div><span class="legend-dot gray-dot"></span><span>Balance</span></div></div>
+                </section>
+
+                <section class="panel quick-actions-panel">
+                    <div class="panel-header"><div><span class="panel-label">QUICK ACCESS</span><h2>Management Tools</h2><p>Review barangays and their project submissions.</p></div></div>
+                    <div class="quick-actions">
+                        <button class="quick-action primary-action" id="barangaysBtn2" type="button"><span class="quick-icon">▦</span><span><strong>View Barangays</strong><small>Manage registered barangays</small></span></button>
+                        <button class="quick-action" id="projectsBtn2" type="button"><span class="quick-icon">▣</span><span><strong>Review Projects</strong><small>Validate submitted updates</small></span></button>
+                    </div>
+                </section>
+            </section>
+
+            <footer class="dashboard-footer"><span>Barangay Tracker</span><span>DILG Project Monitoring System</span><span>© 2026</span></footer>
+        </main>
+    </div>
+    <script type="module" src="./js/dilg-dashboard.js?v=20261019-utilization-balance"></script>
+</body>
+</html>

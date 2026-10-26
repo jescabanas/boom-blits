@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20261005-black-document-actions">');</script>
+    <script>if (new URLSearchParams(window.location.search).get("source") === "dilg") document.documentElement.classList.add("dilg-project-view");</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Project Details - Barangay Tracker</title>
+
+    <!-- SAME CSS THEME AS PROJECTS -->
+    <link
+        rel="stylesheet"
+        href="./css/projects.css?v=20261005-view-project-documents"
+    >
+
+    <style>
+
+        /* Show recorded spending in project details, including DILG's barangay project view. */
+        html.dilg-project-view .stats-grid .stat-card:has(#spent) {
+            display: block !important;
+        }
+
+        html.dilg-project-view #addProjectBtn,
+        html.dilg-project-view #feedbackBtn,
+        html.dilg-project-view #citizenActivityBtn {
+            display: none !important;
+        }
+
+        /* =====================================
+           PROJECT DETAILS
+        ===================================== */
+
+        .details-section {
+
+            margin-top: 20px;
+        }
+
+
+        /* =====================================
+           PROJECT HEADER
+        ===================================== */
+
+        .project-header-card {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 23px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 12px;
+
+            background: white;
+
+            box-shadow:
+                0 2px 8px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.025
+                );
+
+            margin-bottom: 20px;
+        }
+
+
+        .project-header-card h2 {
+
+            margin: 0 0 7px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 23px;
+
+            font-weight: 600;
+
+            color:
+                #111827;
+        }
+
+
+        .project-header-card p {
+
+            margin: 0;
+
+            color:
+                #6b7280;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+        .status {
+
+            display: inline-block;
+
+            padding:
+                7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================
+           SECTION
+        ===================================== */
+
+        .section {
+
+            padding: 23px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 12px;
+
+            background: white;
+
+            box-shadow:
+                0 2px 8px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.025
+                );
+
+            margin-bottom: 20px;
+        }
+
+
+        .section-title {
+
+            padding-bottom: 18px;
+
+            margin-bottom: 18px;
+
+            border-bottom:
+                1px solid
+                #e5e7eb;
+        }
+
+
+        .section-title h2 {
+
+            margin: 0 0 5px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 20px;
+
+            font-weight: 600;
+
+            color:
+                #111827;
+        }
+
+
+        .section-title p {
+
+            margin: 0;
+
+            color:
+                #6b7280;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================
+           STATS
+        ===================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+        }
+
+
+        .stat-card {
+
+            padding: 15px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 8px;
+
+            background:
+                #f9fafb;
+        }
+
+
+        .stat-card span {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color:
+                #6b7280;
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+
+        .stat-card strong {
+
+            display: block;
+
+            color:
+                #111827;
+
+            font-size: 17px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================
+           PROGRESS CARD
+        ===================================== */
+
+        .progress-card {
+
+            margin-top: 18px;
+
+            padding: 15px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 8px;
+
+            background:
+                #ffffff;
+        }
+
+
+        .progress-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+
+            color:
+                #6b7280;
+
+            font-size: 10px;
+        }
+
+
+        .progress-header strong {
+
+            color:
+                #111827;
+        }
+
+
+        .progress-container {
+
+            width: 100%;
+
+            height: 9px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                #e5e7eb;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #60a5fa
+                );
+
+            transition:
+                width 0.5s ease;
+        }
+
+
+        /* =====================================
+           PHYSICAL PERFORMANCE
+        ===================================== */
+
+        .performance-card {
+
+            padding: 18px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 8px;
+
+            background:
+                #f9fafb;
+        }
+
+
+        .performance-number {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+        }
+
+
+        .performance-number strong {
+
+            color:
+                #15803d;
+
+            font-size: 25px;
+        }
+
+
+        .performance-number span {
+
+            color:
+                #6b7280;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        .large-progress-container {
+
+            width: 100%;
+
+            height: 11px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                #e5e7eb;
+        }
+
+
+        .large-progress-bar {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #15803d,
+                    #4ade80
+                );
+
+            transition:
+                width 0.5s ease;
+        }
+
+
+        /* =====================================
+           SCHEDULE
+        ===================================== */
+
+        .schedule-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+
+        .schedule-card {
+
+            padding: 15px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 8px;
+
+            background:
+                #f9fafb;
+        }
+
+
+        .schedule-card span {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color:
+                #6b7280;
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+
+        .schedule-card strong {
+
+            color:
+                #111827;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================
+           COMPARISON
+        ===================================== */
+
+        .comparison-card {
+
+            padding: 18px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 8px;
+
+            background:
+                #f9fafb;
+        }
+
+
+        .comparison-item {
+
+            margin-bottom: 18px;
+        }
+
+
+        .comparison-item:last-child {
+
+            margin-bottom: 0;
+        }
+
+
+        .comparison-label {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+
+            color:
+                #6b7280;
+
+            font-size: 10px;
+        }
+
+
+        .comparison-label strong {
+
+            color:
+                #111827;
+        }
+
+
+        .comparison-bar {
+
+            width: 100%;
+
+            height: 8px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                #e5e7eb;
+        }
+
+
+        .comparison-fill {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #60a5fa
+                );
+
+            transition:
+                width 0.5s ease;
+        }
+
+
+        .physical-fill {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #15803d,
+                    #4ade80
+                );
+        }
+
+
+        /* =====================================
+           BACK BUTTON
+        ===================================== */
+
+        .back-btn {
+
+            min-height: 44px;
+
+            padding:
+                0 17px;
+
+            border:
+                1px solid
+                #dbe3ef;
+
+            border-radius: 9px;
+
+            background:
+                white;
+
+            color:
+                #1d4ed8;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                0.2s;
+        }
+
+
+        .back-btn:hover {
+
+            background:
+                #eff6ff;
+
+            border-color:
+                #93c5fd;
+        }
+
+
+        /* =====================================
+           MESSAGE
+        ===================================== */
+
+        #message {
+
+            margin-top: 15px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .project-header-card {
+
+                flex-direction: column;
+            }
+
+            .back-btn {
+
+                width: 100%;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .schedule-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .section {
+
+                padding: 18px;
+            }
+
+            .project-header-card {
+
+                padding: 18px;
+            }
+
+        }
+
+        .details-document-list { display: grid; gap: 9px; }
+        .details-document-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px; border: 1px solid #dbeafe; border-radius: 9px; background: #f8fbff; }
+        .details-document-info { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+        .details-document-info strong { color: #111827; font-size: 13px; overflow-wrap: anywhere; }
+        .details-document-info span { color: #64748b; font-size: 11px; }
+        .details-document-actions { display: flex; flex-shrink: 0; gap: 7px; }
+        .details-document-btn { min-height: 34px; padding: 0 12px; border: 1px solid #0284c7; border-radius: 7px; background: #0284c7; color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .details-document-btn[data-action="download"] { border-color: #cbd5e1; background: #fff; color: #334155; }
+        .details-document-btn:disabled { opacity: .6; cursor: wait; }
+        .fund-source-line { margin-top: 9px !important; font-size: 12px !important; }
+        .fund-source-line strong { color: #334155; }
+        html.dark-mode .fund-source-line strong { color: #e2e8f0; }
+        html.dark-mode .main-content .details-document-btn { background: #7dd3fc !important; color: #111827 !important; border-color: #7dd3fc !important; }
+        html.dark-mode .main-content .details-document-btn:hover { background: #bae6fd !important; color: #111827 !important; }
+        @media (max-width: 600px) { .details-document-row { align-items: stretch; flex-direction: column; }.details-document-actions button { flex: 1; } }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+    <!-- =====================================
+         SIDEBAR
+    ===================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+
+            <!-- LOGO -->
+
+            <div class="logo">
+
+                <div class="logo-mark">
+                    BT
+                </div>
+
+                <div>
+
+                    <h2>
+                        Barangay
+                    </h2>
+
+                    <span>
+                        TRACKER
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="navigation">
+
+                <div
+                    class="nav-label"
+                    id="navLabel"
+                >
+                    MAIN MENU
+                </div>
+
+
+                <!-- DASHBOARD -->
+
+                <button
+                    class="nav-item"
+                    id="dashboardBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▦
+                    </span>
+
+                    <span id="dashboardNavText">
+                        Dashboard
+                    </span>
+
+                </button>
+
+
+                <!-- PROJECTS -->
+
+                <button
+                    class="nav-item active"
+                    id="projectsBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▤
+                    </span>
+
+                    <span id="projectsNavText">
+                        Projects
+                    </span>
+
+                </button>
+
+
+                <!-- ADD PROJECT -->
+
+                <button
+                    class="nav-item"
+                    id="addProjectBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ＋
+                    </span>
+
+                    <span>
+                        Add Project
+                    </span>
+
+                </button>
+
+
+                <!-- CITIZEN FEEDBACK -->
+
+                <button
+                    class="nav-item"
+                    id="feedbackBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Citizen Feedback
+                    </span>
+
+                </button>
+
+                <a
+                    class="nav-item"
+                    id="citizenActivityBtn"
+                    href="citizen-activity.html"
+                >
+
+                    <span class="nav-icon">◷</span>
+
+                    <span>Citizen Activity</span>
+
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- LOGOUT -->
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ===================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="page-label">
+                    PROJECT MANAGEMENT
+                </div>
+
+                <h1 id="projectTitle">
+                    Project Details
+                </h1>
+
+                <p id="barangayName">
+                    Loading...
+                </p>
+
+            </div>
+
+
+            <button
+                class="back-btn"
+                id="backBtn"
+                type="button"
+            >
+                ← Back to Projects
+            </button>
+
+        </header>
+
+
+
+        <!-- =================================
+             PROJECT HEADER
+        ================================== -->
+
+        <section class="project-header-card">
+
+            <div>
+
+                <h2 id="projectName">
+                    Loading project...
+                </h2>
+
+                <p id="projectDescription">
+                    Loading description...
+                </p>
+                <p class="fund-source-line"><strong>Fund Source:</strong> <span id="fundSourceDisplay">Loading...</span></p>
+
+            </div>
+
+
+            <span
+                id="projectStatus"
+                class="status"
+            >
+                Loading...
+            </span>
+
+        </section>
+
+
+
+        <!-- =================================
+             FINANCIAL PERFORMANCE
+        ================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="panel-label">
+                    FINANCIAL MONITORING
+                </div>
+
+                <h2>
+                    Financial Performance
+                </h2>
+
+                <p>
+                    Budget utilization and expenditure
+                </p>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+
+                <!-- BUDGET -->
+
+                <div class="stat-card">
+
+                    <span>
+                        Allocated Budget
+                    </span>
+
+                    <strong id="budget">
+                        ₱0
+                    </strong>
+
+                </div>
+
+
+                <!-- SPENT -->
+
+                <div class="stat-card">
+
+                    <span>
+                        Spend
+                    </span>
+
+                    <strong id="spent">
+                        ₱0
+                    </strong>
+
+                </div>
+
+
+                <!-- REMAINING -->
+
+                <div class="stat-card">
+
+                    <span>
+                        Balance
+                    </span>
+
+                    <strong id="remaining">
+                        ₱0
+                    </strong>
+
+                </div>
+
+
+                <!-- UTILIZATION -->
+
+                <div class="stat-card">
+
+                    <span>
+                        Utilization
+                    </span>
+
+                    <strong id="utilization">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- FINANCIAL PROGRESS -->
+
+            <div class="progress-card">
+
+                <div class="progress-header">
+
+                    <span>
+                        Financial Utilization
+                    </span>
+
+                    <strong id="utilizationText">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="progress-container">
+
+                    <div
+                        class="progress-bar financial-bar"
+                        id="financialProgress"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             PHYSICAL PERFORMANCE
+        ================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="panel-label">
+                    PROJECT ACCOMPLISHMENT
+                </div>
+
+                <h2>
+                    Physical Performance
+                </h2>
+
+                <p>
+                    Current physical accomplishment
+                </p>
+
+            </div>
+
+
+            <div class="performance-card">
+
+                <div class="performance-number">
+
+                    <strong id="physicalProgress">
+                        0%
+                    </strong>
+
+                    <span>
+                        Physical Accomplishment
+                    </span>
+
+                </div>
+
+
+                <div class="large-progress-container">
+
+                    <div
+                        class="large-progress-bar"
+                        id="physicalProgressBar"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             SCHEDULE
+        ================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="panel-label">
+                    PROJECT TIMELINE
+                </div>
+
+                <h2>
+                    Project Schedule
+                </h2>
+
+                <p>
+                    Project implementation timeline
+                </p>
+
+            </div>
+
+
+            <div class="schedule-grid">
+
+
+                <!-- START -->
+
+                <div class="schedule-card">
+
+                    <span>
+                        Start Date
+                    </span>
+
+                    <strong id="startDate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <!-- TARGET -->
+
+                <div class="schedule-card">
+
+                    <span>
+                        Target Completion
+                    </span>
+
+                    <strong id="targetDate">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             PERFORMANCE SUMMARY
+        ================================== -->
+
+        <section class="section" id="supportingDocumentsSection" hidden>
+            <div class="section-title">
+                <div class="panel-label">PROJECT FILES</div>
+                <h2>Supporting Documents</h2>
+                <p>Files attached to this project</p>
+            </div>
+            <div id="supportingDocumentsList" class="details-document-list"></div>
+        </section>
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="panel-label">
+                    PROJECT ANALYSIS
+                </div>
+
+                <h2>
+                    Performance Summary
+                </h2>
+
+                <p>
+                    Comparison of financial and physical progress
+                </p>
+
+            </div>
+
+
+            <div class="comparison-card">
+
+
+                <!-- FINANCIAL -->
+
+                <div class="comparison-item">
+
+                    <div class="comparison-label">
+
+                        <span>
+                            Financial Progress
+                        </span>
+
+                        <strong id="financialSummary">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparison-bar">
+
+                        <div
+                            id="financialSummaryBar"
+                            class="comparison-fill"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHYSICAL -->
+
+                <div class="comparison-item">
+
+                    <div class="comparison-label">
+
+                        <span>
+                            Physical Progress
+                        </span>
+
+                        <strong id="physicalSummary">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparison-bar">
+
+                        <div
+                            id="physicalSummaryBar"
+                            class="comparison-fill physical-fill"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="dashboard-footer">
+
+            <span>
+                Barangay Tracker
+            </span>
+
+            <span>
+                Project Management System
+            </span>
+
+        </footer>
+
+
+
+        <p id="message"></p>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- JAVASCRIPT -->
+
+<script
+    type="module"
+    src="./js/project-details.js?v=20261021-dilg-back-to-barangay-table"
+></script>
+
+
+</body>
+
+</html>

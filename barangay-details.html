@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20261022-dilg-two-line-schedule">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Barangay Details - Barangay Tracker</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .topbar h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+        }
+
+        .topbar p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+        .back-btn,
+        .logout-btn {
+            border: none;
+            padding: 11px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: #2563eb;
+        }
+
+        .back-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .logout-btn {
+            background: #374151;
+        }
+
+        .logout-btn:hover {
+            background: #1f2937;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .project-status-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+        .project-status-card { padding: 14px 16px; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; }
+        .project-status-card span { display: block; margin-bottom: 7px; color: #64748b; font-size: 11px; font-weight: 700; }
+        .project-status-card strong { color: #111827; font-size: 22px; }
+        html.dark-mode .main-content .project-status-card { border-color: #39556c; background: #1a2a3a; }
+        html.dark-mode .main-content .project-status-card span { color: #cbd5e1; }
+        html.dark-mode .main-content .project-status-card strong { color: #fff; }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .stat-card span {
+            display: block;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card strong {
+            font-size: 23px;
+            color: #111827;
+        }
+
+        .utilization-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .utilization-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 20px;
+        }
+
+        .projects-section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .projects-section h2 {
+            margin-top: 0;
+        }
+
+        .projects-list {
+            display: block;
+        }
+
+        .dilg-barangay-projects-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+        .dilg-barangay-projects-heading p { margin: 0; color: #64748b; font-size: 12px; }
+        .dilg-add-project-btn { flex: 0 0 auto; min-height: 40px; padding: 0 16px; border: 1px solid #0284c7; border-radius: 8px; background: #0284c7; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .dilg-add-project-btn:hover { background: #0369a1; }
+
+        .dilg-project-table-summary { margin: 0 0 10px; color: #475569; font-size: 12px; }
+        .dilg-project-table-wrap { width: 100%; overflow-x: auto; border: 1px solid #dbeafe; border-radius: 10px; }
+        .dilg-project-table { width: 100%; min-width: 1120px; border-collapse: collapse; background: #fff; }
+        .dilg-project-table th, .dilg-project-table td { padding: 12px 13px; border-bottom: 1px solid #e5e7eb; color: #111827; font-size: 12px; text-align: left; vertical-align: middle; }
+        .dilg-project-table th { background: #f0f9ff; color: #0f172a; font-size: 10px; font-weight: 700; white-space: nowrap; }
+        .dilg-project-table tbody tr:last-child td { border-bottom: 0; }
+        .dilg-project-table tbody tr:hover { background: #f8fbff; }
+        .dilg-project-table .money-cell { white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dilg-project-table td:nth-child(6), .dilg-project-table td:nth-child(8) { font-weight: 700; white-space: nowrap; }
+        .dilg-project-title-cell { min-width: 220px; }
+        .dilg-project-title-cell strong, .dilg-project-title-cell span { display: block; }
+        .dilg-project-title-cell span { max-width: 270px; margin-top: 4px; color: #475569; line-height: 1.4; }
+        .dilg-project-schedule { min-width: 130px; white-space: pre-line; line-height: 1.5; }
+        .dilg-project-view-btn { min-height: 32px; padding: 0 13px; border: 1px solid #0284c7; border-radius: 7px; background: #0284c7; color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .dilg-project-view-btn:hover { background: #0369a1; }
+        .dilg-project-row-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+        .dilg-project-edit-btn { min-height: 32px; padding: 0 13px; border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; color: #111827; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .dilg-project-edit-btn:hover { border-color: #7dd3fc; background: #f0f9ff; }
+        .dilg-project-delete-btn { min-height: 32px; padding: 0 13px; border: 1px solid #fecaca; border-radius: 7px; background: #fff1f2; color: #991b1b; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .dilg-project-delete-btn:hover { border-color: #fca5a5; background: #fee2e2; }
+        .dilg-project-delete-btn:disabled { opacity: .65; cursor: wait; }
+        html.dark-mode .main-content .dilg-project-table-wrap { border-color: #39556c; }
+        html.dark-mode .main-content .dilg-project-table { background: #1a2a3a; }
+        html.dark-mode .main-content .dilg-project-table th { border-color: #39556c; background: #203b50; color: #f8fafc; }
+        html.dark-mode .main-content .dilg-project-table td { border-color: #39556c; color: #f8fafc; }
+        html.dark-mode .main-content .dilg-project-table tbody tr:hover { background: #203b50; }
+        html.dark-mode .main-content .dilg-project-title-cell span, html.dark-mode .main-content .dilg-project-table-summary { color: #cbd5e1; }
+        html.dark-mode .main-content .dilg-project-view-btn { background: #7dd3fc; border-color: #7dd3fc; color: #000 !important; }
+        html.dark-mode .main-content .dilg-project-edit-btn { border-color: #64748b; background: #334155; color: #000 !important; }
+        html.dark-mode .main-content .dilg-project-delete-btn { border-color: #fca5a5; background: #fecaca; color: #000 !important; }
+        html.dark-mode .main-content .dilg-add-project-btn { border-color: #7dd3fc; background: #7dd3fc; color: #000 !important; }
+
+        .project-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .project-header h3 {
+            margin: 0 0 6px;
+        }
+
+        .project-header p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .status {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            height: fit-content;
+        }
+
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .info-box {
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .info-box span {
+            display: block;
+            font-size: 11px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .info-box strong {
+            font-size: 14px;
+        }
+
+        .barangay-project-documents { margin-top: 16px; padding-top: 14px; border-top: 1px solid #e5e7eb; }
+        .barangay-project-documents h4 { margin: 0 0 9px; color: #334155; font-size: 13px; }
+        .barangay-document-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 10px; border: 1px solid #dbeafe; border-radius: 8px; background: #f8fbff; }
+        .barangay-document-row + .barangay-document-row { margin-top: 7px; }
+        .barangay-document-name { min-width: 0; color: #1f2937; font-size: 12px; overflow-wrap: anywhere; }
+        .barangay-document-actions { display: flex; flex-shrink: 0; gap: 7px; }
+        .barangay-document-action { min-height: 32px; padding: 0 11px; border: 1px solid #0284c7; border-radius: 7px; background: #0284c7; color: white; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .barangay-document-action:last-child { border-color: #cbd5e1; background: white; color: #334155; }
+        .barangay-document-action:disabled { opacity: .6; cursor: wait; }
+        html.dark-mode .main-content .barangay-document-action { background: #7dd3fc !important; color: #111827 !important; border-color: #7dd3fc !important; }
+        html.dark-mode .main-content .barangay-document-action:hover { background: #bae6fd !important; color: #111827 !important; }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+
+        #message {
+            color: #b91c1c;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 900px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .project-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 18px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions {
+                width: 100%;
+            }
+
+            .actions button {
+                flex: 1;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .project-status-summary { grid-template-columns: 1fr; }
+            .dilg-barangay-projects-heading { align-items: flex-start; flex-direction: column; }
+
+            .project-info {
+                grid-template-columns: 1fr;
+            }
+
+            .barangay-document-row { align-items: stretch; flex-direction: column; }
+            .barangay-document-actions button { flex: 1; }
+
+        }
+
+    </style>
+    <link rel="stylesheet" href="./css/dilg-pages.css?v=20261022-dilg-two-line-schedule">
+
+</head>
+
+<body>
+
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo"><div class="logo-mark">BT</div><div><h2>Barangay</h2><span>TRACKER</span></div></div>
+            <nav class="navigation">
+                <div class="nav-label">DILG ADMIN</div>
+                <a class="nav-item" href="dilg-dashboard.html"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
+                <a class="nav-item active" href="barangays.html"><span class="nav-icon">▦</span><span>Barangays</span></a>
+                <a class="nav-item" href="dilg-projects.html"><span class="nav-icon">▣</span><span>Projects</span></a>
+                <a class="nav-item" href="dilg-projects.html?validation=true"><span class="nav-icon">✓</span><span>Project Validation</span></a>
+            </nav>
+        </div>
+        <div class="sidebar-bottom"><div class="sidebar-divider"></div><button class="logout-btn" id="logoutBtn" type="button"><span class="nav-icon">↪</span><span>Logout</span></button></div>
+    </aside>
+    <main class="main-content"><div class="container">
+
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <div>
+
+            <h1 id="barangayName">
+                Loading...
+            </h1>
+
+            <div class="page-label">BARANGAY MANAGEMENT</div><p id="barangayId">Barangay ID: -</p>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="back-btn"
+                id="backBtn"
+                type="button"
+            >
+                ← Back to Barangays
+            </button>
+        </div>
+
+    </header>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <span>
+                Total Projects
+            </span>
+
+            <strong id="totalProjects">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>
+                Total Budget
+            </span>
+
+            <strong id="totalBudget">
+                ₱0.00
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>
+                Total Spent
+            </span>
+
+            <strong id="totalSpent">
+                ₱0.00
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>
+                Remaining Budget
+            </span>
+
+            <strong id="remainingBudget">
+                ₱0.00
+            </strong>
+
+        </div>
+
+
+    </div>
+
+    <section class="project-status-summary" aria-label="Project status counts">
+        <div class="project-status-card"><span>Planned Projects</span><strong id="plannedProjectCount">0/0</strong></div>
+        <div class="project-status-card"><span>Ongoing Projects</span><strong id="ongoingProjectCount">0/0</strong></div>
+        <div class="project-status-card"><span>Completed Projects</span><strong id="completedProjectCount">0/0</strong></div>
+    </section>
+
+
+    <!-- UTILIZATION -->
+
+    <div class="utilization-card">
+
+        <div class="utilization-header">
+
+            <strong>
+                Budget Utilization
+            </strong>
+
+            <strong id="budgetUtilization">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+                style="width: 0%"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROJECTS -->
+
+    <section class="projects-section" id="projects">
+
+        <div class="dilg-barangay-projects-heading">
+            <div>
+                <h2>Barangay Projects</h2>
+                <p>Projects submitted by this barangay.</p>
+            </div>
+            <button class="dilg-add-project-btn" id="dilgAddProjectBtn" type="button">+ Add Project</button>
+        </div>
+
+
+        <div
+            class="projects-list"
+            id="projectsList"
+        >
+
+            <div class="empty">
+                Loading projects...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <p id="message"></p>
+
+
+    </div></main>
+</div>
+
+
+<script
+    type="module"
+    src="./js/barangay-details.js?v=20261022-dilg-two-line-schedule"
+></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>if (new URLSearchParams(window.location.search).get("source") === "dilg") document.documentElement.classList.add("dilg-project-mode");</script>
+    <style>html.dilg-project-mode:not(.dilg-nav-ready) .sidebar .navigation { visibility: hidden; }</style>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20260903-dark-preload">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Project - Barangay Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/add-project.css?v=20261021-document-dark-contrast"
+    >
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- ================================= -->
+    <!-- SIDEBAR -->
+    <!-- ================================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+            <!-- LOGO -->
+
+            <div class="logo">
+
+                <div class="logo-mark">
+                    BT
+                </div>
+
+                <div>
+
+                    <h2>
+                        Barangay
+                    </h2>
+
+                    <span>
+                        TRACKER
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="navigation">
+
+                <div class="nav-label">
+                    MAIN MENU
+                </div>
+
+
+                <!-- DASHBOARD -->
+
+                <button
+                    class="nav-item"
+                    id="dashboardBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▦
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </button>
+
+
+                <!-- PROJECTS -->
+
+                <button
+                    class="nav-item"
+                    id="projectsBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Projects
+                    </span>
+
+                </button>
+
+
+                <!-- ADD PROJECT -->
+
+                <button
+                    class="nav-item active"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ＋
+                    </span>
+
+                    <span>
+                        Add Project
+                    </span>
+
+                </button>
+
+
+                <!-- CITIZEN FEEDBACK -->
+
+                <button
+                    class="nav-item"
+                    id="feedbackBtn"
+                    type="button"
+                >
+
+                    <span class="nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Citizen Feedback
+                    </span>
+
+                </button>
+
+                <a
+                    class="nav-item"
+                    href="citizen-activity.html"
+                >
+
+                    <span class="nav-icon">◷</span>
+
+                    <span>Citizen Activity</span>
+
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- SIDEBAR BOTTOM -->
+        <!-- ================================= -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-divider"></div>
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ================================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================================= -->
+        <!-- TOPBAR -->
+        <!-- ================================= -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="page-label">
+                    PROJECT MANAGEMENT
+                </div>
+
+                <h1>
+                    Add New Project
+                </h1>
+
+                <p>
+                    Register a new barangay project
+                    for monitoring.
+                </p>
+
+            </div>
+
+
+            <!-- DATE / INFO -->
+
+            <div class="topbar-right">
+
+                <div class="date-box">
+
+                    <span class="date-label">
+                        STATUS
+                    </span>
+
+                    <strong>
+                        NEW PROJECT
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================================= -->
+        <!-- FORM PANEL -->
+        <!-- ================================= -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <div class="panel-label">
+                        PROJECT REGISTRATION
+                    </div>
+
+                    <h2>
+                        Project Information
+                    </h2>
+
+                    <p>
+                        Enter the details of the new
+                        barangay project below.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- FORM -->
+            <!-- ================================= -->
+
+            <form id="projectForm">
+
+
+                <!-- PROJECT NAME -->
+
+                <div class="form-group">
+
+                    <label for="projectName">
+                        Project Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="projectName"
+                        placeholder="e.g. Road Rehabilitation"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="5"
+                        placeholder="Describe the project..."
+                        required
+                    ></textarea>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="fundSource">Fund Source</label>
+                    <select id="fundSource" required>
+                        <option value="">Select fund source</option>
+                        <option value="20% NTA">20% NTA</option>
+                        <option value="Development Fund">Development Fund</option>
+                        <option value="Peace and Order Fund">Peace and Order Fund</option>
+                        <option value="Citizens Fund">Citizens Fund</option>
+                        <option value="Barangay General Fund">Barangay General Fund</option>
+                        <option value="Provincial/City Assistance">Provincial/City Assistance</option>
+                        <option value="National Government Grant">National Government Grant</option>
+                        <option value="Donations / Private Sector">Donations / Private Sector</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" id="fundSourceOther" placeholder="Specify fund source" maxlength="100" hidden>
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- BUDGET -->
+                <!-- ================================= -->
+
+                <div class="form-row">
+
+
+                    <!-- ALLOCATED BUDGET -->
+
+                    <div class="form-group">
+
+                        <label for="budget">
+                            Allocated Budget
+                        </label>
+
+                        <div class="input-money">
+
+                            <span>
+                                ₱
+                            </span>
+
+                            <input
+                                type="number"
+                                id="budget"
+                                min="0"
+                                step="0.01"
+                                placeholder="1000000"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AMOUNT SPENT -->
+
+                    <div class="form-group">
+
+                        <label for="spent">
+                            Amount Spent
+                        </label>
+
+                        <div class="input-money">
+
+                            <span>
+                                ₱
+                            </span>
+
+                            <input
+                                type="number"
+                                id="spent"
+                                min="0"
+                                step="0.01"
+                                value="0"
+                                placeholder="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- STATUS -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="status">
+                        Project Status
+                    </label>
+
+                    <select
+                        id="status"
+                        required
+                    >
+
+                        <option value="Planned">
+                            Planned
+                        </option>
+
+                        <option value="Ongoing">
+                            Ongoing
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- PHYSICAL PROGRESS -->
+                <!-- ================================= -->
+
+                <div class="form-group">
+
+                    <label for="physicalProgress">
+                        Physical Progress (%)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="physicalProgress"
+                        min="0"
+                        max="100"
+                        step="1"
+                        value="0"
+                        placeholder="0"
+                        required
+                    >
+
+                    <small>
+                        Enter the current physical
+                        accomplishment of the project.
+                    </small>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- PROJECT DATES -->
+                <!-- ================================= -->
+
+                <div class="form-row">
+
+
+                    <!-- START DATE -->
+
+                    <div class="form-group">
+
+                        <label for="startDate">
+                            Start Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="startDate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- TARGET DATE -->
+
+                    <div class="form-group">
+
+                        <label for="targetDate">
+                            Target Completion
+                        </label>
+
+                        <input
+                            type="date"
+                            id="targetDate"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- SUPPORTING DOCUMENT -->
+                <!-- ================================= -->
+
+                <div class="form-group document-upload-group">
+
+                    <label for="projectDocument">
+                        Supporting Documents (up to 5)
+                    </label>
+
+                    <input
+                        type="file"
+                        id="projectDocument"
+                        accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    >
+                    <ul id="selectedDocuments" class="selected-documents" aria-live="polite"></ul>
+
+                    <small>
+                        Upload up to 5 PDF, DOC, or DOCX files for DILG review (maximum 10 MB each).
+                    </small>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- BUTTONS -->
+                <!-- ================================= -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelBtn"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Save Project
+                    </button>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <p id="message"></p>
+
+            </form>
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- FOOTER -->
+        <!-- ================================= -->
+
+        <footer class="dashboard-footer">
+
+            <span>
+                Barangay Tracker
+            </span>
+
+            <span>
+                Project Management System
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- ================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================= -->
+
+<script
+    type="module"
+    src="./js/add-project.js?v=20261021-dilg-project-menu-route"
+></script>
+
+</body>
+
+</html>

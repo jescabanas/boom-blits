@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>try { if (localStorage.getItem("barangayTrackerDarkMode") === "true") document.documentElement.classList.add("dark-mode"); } catch (_) {} document.write('<link rel="stylesheet" href="./css/dark-mode.css?v=20261012-feedback-images">');</script>
+    <script>try { if (localStorage.getItem("sidebarCollapsed") === "true") document.documentElement.classList.add("sidebar-collapsed"); } catch (_) {}</script>
+    <script type="importmap">
+    { "imports": { "firebase/app": "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js", "firebase/auth": "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js", "firebase/firestore": "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js" } }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - Barangay Tracker</title>
+    <link rel="stylesheet" href="./css/citizen.css?v=20261012-feedback-images">
+</head>
+<body class="citizen-project-details-page">
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo"><div class="logo-mark">BT</div><div><h2>Barangay</h2><span>TRACKER</span></div></div>
+            <nav class="navigation">
+                <div class="nav-label">CITIZEN PORTAL</div>
+                <button class="nav-item" id="dashboardBtn" type="button"><span class="nav-icon">⌂</span><span>Dashboard</span></button>
+                <button class="nav-item active" id="projectsBtn" type="button"><span class="nav-icon">▣</span><span>Projects</span></button>
+            </nav>
+        </div>
+        <div class="sidebar-bottom"><div class="sidebar-divider"></div><button class="logout-btn" id="logoutBtn" type="button"><span class="nav-icon">↪</span><span>Logout</span></button></div>
+    </aside>
+    <main class="main-content">
+        <header class="topbar">
+            <div><div class="page-label">PROJECT INFORMATION</div><h1 id="citizenTitle">Project Details</h1><p id="welcome">Loading project information...</p></div>
+            <div class="date-box"><span class="date-label">SYSTEM</span><strong>2026</strong></div>
+        </header>
+        <section class="panel details-panel" id="projectDetailsPanel" style="display: none;">
+            <div class="panel-header">
+                <div><span class="panel-label">PROJECT PROFILE</span><h2 id="detailsProjectName">Project Details</h2><p>Official project information and citizen feedback.</p></div>
+                <button class="close-btn" id="closeDetailsBtn" type="button">Back to Projects</button>
+            </div>
+            <div id="projectDetails"></div>
+            <div class="feedback-section">
+                <h3>Citizen Feedback</h3>
+                <p>Share your feedback about this project.</p>
+                <form id="feedbackForm">
+                    <input type="hidden" id="feedbackProjectId">
+                    <div class="form-group"><label for="feedbackText">Your Feedback</label><textarea id="feedbackText" rows="8" placeholder="Write your feedback..." required></textarea></div>
+                    <div class="form-group feedback-image-group"><label for="feedbackImages">Photos (up to 5)</label><input type="file" id="feedbackImages" multiple accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"><small>Attach up to 5 JPG, PNG, or WEBP images (10 MB each).</small><div id="feedbackImagePreview" class="feedback-image-preview" aria-live="polite"></div></div>
+                    <button type="submit" class="feedback-btn" id="feedbackSubmitBtn">Submit Feedback</button>
+                </form>
+                <p id="feedbackMessage"></p>
+            </div>
+        </section>
+        <p id="message"></p>
+    </main>
+</div>
+<script type="module" src="./js/citizen.js?v=20261012-fund-source"></script>
+</body>
+</html>
